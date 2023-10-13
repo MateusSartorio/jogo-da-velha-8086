@@ -1,4 +1,8 @@
-; vers�o de 10/05/2007
+; Hiuri
+; Mateus Ticianeli Sartorio
+; Sistemas Embarcados I - 2023/2 - Engenharia de Computacao
+
+; versao de 10/05/2007
 ; corrigido erro de arredondamento na rotina line.
 ; circle e full_circle disponibilizados por Jefferson Moro em 10/2009
 ;
@@ -10,136 +14,274 @@ segment code
     		mov 		ss,ax
     		mov 		sp,stacktop
 
-; salvar modo corrente de video(vendo como est� o modo de video da maquina)
-            mov  		ah,0Fh
-    		int  		10h
-    		mov  		[modo_anterior],al   
+; salvar modo atual de video(vendo como esta o modo de video da maquina)
+			mov  		ah,0Fh
+			int  		10h
+			mov  		[modo_anterior],al   
 
-; alterar modo de video para gr�fico 640x480 16 cores
-    	mov     	al,12h
-   		mov     	ah,0
-    	int     	10h
+; alterar modo de video para grafico 640x480 16 cores
+			mov     	al,12h
+			mov     	ah,0
+			int     	10h
+
+; desenhar jogo da velha
+
+			; primeiro retangulo
+			mov byte[cor], branco_intenso
+			mov ax, 10
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 630
+			push ax
+			mov ax, 10
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 630
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 630
+			push ax
+			mov ax, 65
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 10
+			push ax
+			mov ax, 65
+			push ax
+			mov ax, 630
+			push ax
+			mov ax, 65
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 10
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 65
+			push ax
+			call line
+
+
+			; segundo retangulo
+			mov byte[cor], branco_intenso
+			mov ax, 10
+			push ax
+			mov ax, 75
+			push ax
+			mov ax, 630
+			push ax
+			mov ax, 75
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 630
+			push ax
+			mov ax, 75
+			push ax
+			mov ax, 630
+			push ax
+			mov ax, 130
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 630
+			push ax
+			mov ax, 130
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 130
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 10
+			push ax
+			mov ax, 130
+			push ax
+			mov ax, 10
+			push ax
+			mov ax, 75
+			push ax
+			call line
+
+
+			; jogo da velha
+			; horizontal
+			mov byte[cor], branco_intenso
+			mov ax, 155
+			push ax
+			mov ax, 250
+			push ax
+			mov ax, 485
+			push ax
+			mov ax, 250
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 155
+			push ax
+			mov ax, 360
+			push ax
+			mov ax, 485
+			push ax
+			mov ax, 360
+			push ax
+			call line
+
+			; vertical
+			mov byte[cor], branco_intenso
+			mov ax, 265
+			push ax
+			mov ax, 140
+			push ax
+			mov ax, 265
+			push ax
+			mov ax, 470
+			push ax
+			call line
+
+			mov byte[cor], branco_intenso
+			mov ax, 375
+			push ax
+			mov ax, 140
+			push ax
+			mov ax, 375
+			push ax
+			mov ax, 470
+			push ax
+			call line
+
+; desenhar retas
+		; mov		byte[cor],branco_intenso	;antenas
+		; mov		ax,20
+		; push		ax
+		; mov		ax,400
+		; push		ax
+		; mov		ax,620
+		; push		ax
+		; mov		ax,400
+		; push		ax
+		; call		line
+		
+		; mov		byte[cor],marrom	;antenas
+		; mov		ax,130
+		; push		ax
+		; mov		ax,270
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; mov		ax,300
+		; push		ax
+		; call		line
+		
+		; mov		ax,130
+		; push		ax
+		; mov		ax,130
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; call		line
+				
+; desenha circulos 
+		; mov		byte[cor],azul	;cabe�a
+		; mov		ax,200
+		; push		ax
+		; mov		ax,200
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; call	circle
+
+		; mov		byte[cor],verde	;corpo
+		; mov		ax,450
+		; push		ax
+		; mov		ax,200
+		; push		ax
+		; mov		ax,190
+		; push		ax
+		; call	circle
+		
+		; mov		ax,100	;circulos das antenas
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; mov		ax,10
+		; push		ax
+		; call	circle
+		
+		; mov		ax,100
+		; push		ax
+		; mov		ax,300
+		; push		ax
+		; mov		ax,10
+		; push		ax
+		; call	circle
+		
+		; mov		byte[cor],vermelho	;circulos vermelhos
+		; mov		ax,500
+		; push		ax
+		; mov		ax,300
+		; push		ax
+		; mov		ax,50
+		; push		ax
+		; call	full_circle
+		
+		; mov		ax,500
+		; push		ax
+		; mov		ax,100
+		; push		ax
+		; mov		ax,50
+		; push		ax
+		; call	full_circle
+		
+		; mov		ax,350
+		; push		ax
+		; mov		ax,200
+		; push		ax
+		; mov		ax,50
+		; push		ax
+		; call	full_circle
 		
 
-;desenhar retas
+; escrever uma mensagem
+;     	mov     	cx,14			;n�mero de caracteres
+;     	mov     	bx,0
+;     	mov     	dh,0			;linha 0-29
+;     	mov     	dl,30			;coluna 0-79
+; 		mov		byte[cor],azul
+; l4:
+; 		call	cursor
+;     	mov     al,[bx+mens]
+; 		call	caracter
+;     	inc     bx			;proximo caracter
+; 		inc		dl			;avanca a coluna
+; 		inc		byte [cor]		;mudar a cor para a seguinte
+;     	loop    l4
 
-		mov		byte[cor],branco_intenso	;antenas
-		mov		ax,20
-		push		ax
-		mov		ax,400
-		push		ax
-		mov		ax,620
-		push		ax
-		mov		ax,400
-		push		ax
-		call		line
-		
-		mov		byte[cor],marrom	;antenas
-		mov		ax,130
-		push		ax
-		mov		ax,270
-		push		ax
-		mov		ax,100
-		push		ax
-		mov		ax,300
-		push		ax
-		call		line
-		
-		mov		ax,130
-		push		ax
-		mov		ax,130
-		push		ax
-		mov		ax,100
-		push		ax
-		mov		ax,100
-		push		ax
-		call		line
-		
-		
-;desenha circulos 
-		mov		byte[cor],azul	;cabe�a
-		mov		ax,200
-		push		ax
-		mov		ax,200
-		push		ax
-		mov		ax,100
-		push		ax
-		call	circle
+; 		mov    	ah,08h
+; 		int     21h
+; 	    mov  	ah,0   			; set video mode
+; 	    mov  	al,[modo_anterior]   	; modo anterior
+; 	    int  	10h
+; 		mov     ax,4c00h
+; 		int     21h
 
-		mov		byte[cor],verde	;corpo
-		mov		ax,450
-		push		ax
-		mov		ax,200
-		push		ax
-		mov		ax,190
-		push		ax
-		call	circle
-		
-		mov		ax,100	;circulos das antenas
-		push		ax
-		mov		ax,100
-		push		ax
-		mov		ax,10
-		push		ax
-		call	circle
-		
-		mov		ax,100
-		push		ax
-		mov		ax,300
-		push		ax
-		mov		ax,10
-		push		ax
-		call	circle
-		
-		mov		byte[cor],vermelho	;circulos vermelhos
-		mov		ax,500
-		push		ax
-		mov		ax,300
-		push		ax
-		mov		ax,50
-		push		ax
-		call	full_circle
-		
-		mov		ax,500
-		push		ax
-		mov		ax,100
-		push		ax
-		mov		ax,50
-		push		ax
-		call	full_circle
-		
-		mov		ax,350
-		push		ax
-		mov		ax,200
-		push		ax
-		mov		ax,50
-		push		ax
-		call	full_circle
-		
-
-;escrever uma mensagem
-
-    	mov     	cx,14			;n�mero de caracteres
-    	mov     	bx,0
-    	mov     	dh,0			;linha 0-29
-    	mov     	dl,30			;coluna 0-79
-		mov		byte[cor],azul
-l4:
-		call	cursor
-    	mov     al,[bx+mens]
-		call	caracter
-    	inc     bx			;proximo caracter
-		inc		dl			;avanca a coluna
-		inc		byte [cor]		;mudar a cor para a seguinte
-    	loop    l4
-
-		mov    	ah,08h
-		int     21h
-	    mov  	ah,0   			; set video mode
-	    mov  	al,[modo_anterior]   	; modo anterior
-	    int  	10h
-		mov     ax,4c00h
-		int     21h
 ;***************************************************************************
 ;
 ;   fun��o cursor
