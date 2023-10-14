@@ -1,169 +1,291 @@
-; Hiuri
+; Hiuri Liberato
 ; Mateus Ticianeli Sartorio
 ; Sistemas Embarcados I - 2023/2 - Engenharia de Computacao
 
 ; versao de 10/05/2007
 ; corrigido erro de arredondamento na rotina line.
 ; circle e full_circle disponibilizados por Jefferson Moro em 10/2009
-;
+
 segment code
 ..start:
-    		mov 		ax,data
-    		mov 		ds,ax
-    		mov 		ax,stack
-    		mov 		ss,ax
-    		mov 		sp,stacktop
+	mov 		ax, data
+	mov 		ds, ax
+	mov 		ax, stack
+	mov 		ss, ax
+	mov 		sp, stacktop
 
-; salvar modo atual de video(vendo como esta o modo de video da maquina)
-			mov  		ah,0Fh
-			int  		10h
-			mov  		[modo_anterior],al   
+; salva modo atual de video (vendo como esta o modo de video da maquina)
+	mov  		ah, 0Fh
+	int  		10h
+	mov  		[modo_anterior], al   
 
-; alterar modo de video para grafico 640x480 16 cores
-			mov     	al,12h
-			mov     	ah,0
-			int     	10h
+; altera modo de video para grafico 640x480 16 cores
+	mov     	al, 12h
+	mov     	ah, 0
+	int     	10h
 
-; desenhar jogo da velha
+; A partir daqui codigo desenvolvido pela gente
+desenha_ui:
+	; primeiro retangulo
+	mov byte[cor], branco_intenso
+	mov ax, 10
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 630
+	push ax
+	mov ax, 10
+	push ax
+	call line
 
-			; primeiro retangulo
-			mov byte[cor], branco_intenso
-			mov ax, 10
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 630
-			push ax
-			mov ax, 10
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 630
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 630
+	push ax
+	mov ax, 65
+	push ax
+	call line
 
-			mov byte[cor], branco_intenso
-			mov ax, 630
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 630
-			push ax
-			mov ax, 65
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 10
+	push ax
+	mov ax, 65
+	push ax
+	mov ax, 630
+	push ax
+	mov ax, 65
+	push ax
+	call line
 
-			mov byte[cor], branco_intenso
-			mov ax, 10
-			push ax
-			mov ax, 65
-			push ax
-			mov ax, 630
-			push ax
-			mov ax, 65
-			push ax
-			call line
-
-			mov byte[cor], branco_intenso
-			mov ax, 10
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 65
-			push ax
-			call line
-
-
-			; segundo retangulo
-			mov byte[cor], branco_intenso
-			mov ax, 10
-			push ax
-			mov ax, 75
-			push ax
-			mov ax, 630
-			push ax
-			mov ax, 75
-			push ax
-			call line
-
-			mov byte[cor], branco_intenso
-			mov ax, 630
-			push ax
-			mov ax, 75
-			push ax
-			mov ax, 630
-			push ax
-			mov ax, 130
-			push ax
-			call line
-
-			mov byte[cor], branco_intenso
-			mov ax, 630
-			push ax
-			mov ax, 130
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 130
-			push ax
-			call line
-
-			mov byte[cor], branco_intenso
-			mov ax, 10
-			push ax
-			mov ax, 130
-			push ax
-			mov ax, 10
-			push ax
-			mov ax, 75
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 10
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 65
+	push ax
+	call line
 
 
-			; jogo da velha
-			; horizontal
-			mov byte[cor], branco_intenso
-			mov ax, 155
-			push ax
-			mov ax, 250
-			push ax
-			mov ax, 485
-			push ax
-			mov ax, 250
-			push ax
-			call line
+	; segundo retangulo
+	mov byte[cor], branco_intenso
+	mov ax, 10
+	push ax
+	mov ax, 75
+	push ax
+	mov ax, 630
+	push ax
+	mov ax, 75
+	push ax
+	call line
 
-			mov byte[cor], branco_intenso
-			mov ax, 155
-			push ax
-			mov ax, 360
-			push ax
-			mov ax, 485
-			push ax
-			mov ax, 360
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 630
+	push ax
+	mov ax, 75
+	push ax
+	mov ax, 630
+	push ax
+	mov ax, 130
+	push ax
+	call line
 
-			; vertical
-			mov byte[cor], branco_intenso
-			mov ax, 265
-			push ax
-			mov ax, 140
-			push ax
-			mov ax, 265
-			push ax
-			mov ax, 470
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 630
+	push ax
+	mov ax, 130
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 130
+	push ax
+	call line
 
-			mov byte[cor], branco_intenso
-			mov ax, 375
-			push ax
-			mov ax, 140
-			push ax
-			mov ax, 375
-			push ax
-			mov ax, 470
-			push ax
-			call line
+	mov byte[cor], branco_intenso
+	mov ax, 10
+	push ax
+	mov ax, 130
+	push ax
+	mov ax, 10
+	push ax
+	mov ax, 75
+	push ax
+	call line
+
+
+	; jogo da velha
+	; horizontal
+	mov byte[cor], branco_intenso
+	mov ax, 155
+	push ax
+	mov ax, 250
+	push ax
+	mov ax, 485
+	push ax
+	mov ax, 250
+	push ax
+	call line
+
+	mov byte[cor], branco_intenso
+	mov ax, 155
+	push ax
+	mov ax, 360
+	push ax
+	mov ax, 485
+	push ax
+	mov ax, 360
+	push ax
+	call line
+
+	; vertical
+	mov byte[cor], branco_intenso
+	mov ax, 265
+	push ax
+	mov ax, 140
+	push ax
+	mov ax, 265
+	push ax
+	mov ax, 470
+	push ax
+	call line
+
+	mov byte[cor], branco_intenso
+	mov ax, 375
+	push ax
+	mov ax, 140
+	push ax
+	mov ax, 375
+	push ax
+	mov ax, 470
+	push ax
+	call line
+
+le_entrada:
+	mov 		ah, 1
+	int 		21h
+	cmp 		al, 'c'
+	je 		novo_jogo
+	cmp 		al, 's'
+	je 		sair
+	cmp 		al, 'X'
+	je 		le_X
+	cmp 		al, 'C'
+	je 		le_C
+	call 		imprime_no_campo_mensagens
+	jmp 		le_entrada
+
+novo_jogo:
+
+sair:
+	mov    		ah, 08h
+	int     	21h
+	mov  		ah, 0   					; set video mode
+	mov  		al, [modo_anterior]   				; modo anterior
+	int  		10h
+	mov     	ax, 4c00h
+	int     	21h
+
+	mov 		ah, 4ch
+	int 		21h
+
+le_X:
+	; mov 		ah, 1
+	; int 		21h
+
+le_C:
+	mov		cx, 1
+	mov		bx, 0
+	mov 		dh, 23
+	mov		dl, 30
+	mov		byte [caractere_a_ser_impresso], 'C'
+	mov		byte [indice_caractere], 0
+	call 		imprime_no_campo_comando
+
+	mov 		ah, 1
+	int 		21h
+	mov		cx, 1
+	mov		bx, 0
+	mov 		dh, 23
+	mov		dl, 31
+	mov		byte [caractere_a_ser_impresso + 1], al
+	mov		byte [indice_caractere], 1
+	call 		imprime_no_campo_comando
+
+	mov 		ah, 1
+	int 		21h
+	mov		cx, 1
+	mov		bx, 0
+	mov 		dh, 23
+	mov		dl, 32
+	mov		byte [caractere_a_ser_impresso + 2], al
+	mov		byte [indice_caractere], 2
+	call 		imprime_no_campo_comando
+
+	jmp 		le_entrada
+
+salva_contexto:
+	push 		ax
+	push		bx
+	push 		cx
+	push		dx
+
+	ret
+
+recupera_contexto:
+	; recuperar contexto
+	pop 		dx
+	pop 		cx
+	pop 		bx
+	pop 		ax
+
+	ret
+
+imprime_no_campo_comando:
+	mov		byte[cor], branco_intenso
+l_1_1:
+	call		cursor
+	mov		bl, [indice_caractere]
+	mov		bh, 0
+	mov     	al, [bx + caractere_a_ser_impresso]
+	call		caracter
+	inc     	bx						; proximo caracter
+	inc		dl						; avanca a coluna
+	loop    	l_1_1
+
+	ret
+
+imprime_no_campo_mensagens:
+	; salva contexto
+	push 		ax
+	push		bx
+	push 		cx
+	push		dx
+
+	mov     	cx, 16						; numero de caracteres
+	mov     	bx, 0
+	mov     	dh, 27						; linha 0-29
+	mov     	dl, 30						; coluna 0-79
+	mov		byte[cor], vermelho
+l_1_2:
+	call		cursor
+	mov     	al, [bx + mensagem_comando_invalido]
+	call		caracter
+	inc     	bx						; proximo caracter
+	inc		dl						; avanca a coluna
+	loop    	l_1_2
+
+	; recupera contexto
+	pop dx
+	pop cx
+	pop bx
+	pop ax
+
+	ret
 
 ; desenhar retas
 		; mov		byte[cor],branco_intenso	;antenas
@@ -284,7 +406,7 @@ segment code
 
 ;***************************************************************************
 ;
-;   fun��o cursor
+;   funcao cursor
 ;
 ; dh = linha (0-29) e  dl=coluna  (0-79)
 cursor:
@@ -310,7 +432,7 @@ cursor:
 		ret
 ;_____________________________________________________________________________
 ;
-;   fun��o caracter escrito na posi��o do cursor
+;   funcao caracter escrito na posicao do cursor
 ;
 ; al= caracter a ser escrito
 ; cor definida na variavel cor
@@ -323,29 +445,29 @@ caracter:
 		push		si
 		push		di
 		push		bp
-    		mov     	ah,9
-    		mov     	bh,0
-    		mov     	cx,1
-   		mov     	bl,[cor]
-    		int     	10h
-		pop		bp
-		pop		di
-		pop		si
-		pop		dx
-		pop		cx
-		pop		bx
-		pop		ax
+		mov     	ah, 9
+		mov     	bh, 0
+		mov     	cx, 1
+   		mov     	bl, [cor]
+		int     	10h
+		pop			bp
+		pop			di
+		pop			si
+		pop			dx
+		pop			cx
+		pop			bx
+		pop			ax
 		popf
 		ret
 ;_____________________________________________________________________________
 ;
-;   fun��o plot_xy
+;   funcao plot_xy
 ;
 ; push x; push y; call plot_xy;  (x<639, y<479)
 ; cor definida na variavel cor
 plot_xy:
 		push		bp
-		mov		bp,sp
+		mov			bp,sp
 		pushf
 		push 		ax
 		push 		bx
@@ -353,24 +475,25 @@ plot_xy:
 		push		dx
 		push		si
 		push		di
-	    mov     	ah,0ch
-	    mov     	al,[cor]
-	    mov     	bh,0
-	    mov     	dx,479
-		sub		dx,[bp+4]
-	    mov     	cx,[bp+6]
+	    mov     	ah, 0ch
+	    mov     	al, [cor]
+	    mov     	bh, 0
+	    mov     	dx, 479
+		sub			dx, [bp+4]
+	    mov     	cx, [bp+6]
 	    int     	10h
-		pop		di
-		pop		si
-		pop		dx
-		pop		cx
-		pop		bx
-		pop		ax
+		pop			di
+		pop			si
+		pop			dx
+		pop			cx
+		pop			bx
+		pop			ax
 		popf
-		pop		bp
-		ret		4
+		pop			bp
+		ret			4
+
 ;_____________________________________________________________________________
-;    fun��o circle
+;    funcao circle
 ;	 push xc; push yc; push r; call circle;  (xc+r<639,yc+r<479)e(xc-r>0,yc-r>0)
 ; cor definida na variavel cor
 circle:
@@ -643,7 +766,7 @@ fim_full_circle:
 	ret		6
 ;-----------------------------------------------------------------------------
 ;
-;   fun��o line
+;   funcao line
 ;
 ; push x1; push y1; push x2; push y2; call line;  (x<639, y<479)
 line:
@@ -825,30 +948,36 @@ cor		db		branco_intenso
 ;	1 1 1 0 amarelo
 ;	1 1 1 1 branco intenso
 
-preto		equ		0
-azul		equ		1
-verde		equ		2
-cyan		equ		3
-vermelho	equ		4
-magenta		equ		5
-marrom		equ		6
-branco		equ		7
-cinza		equ		8
-azul_claro	equ		9
-verde_claro	equ		10
-cyan_claro	equ		11
-rosa		equ		12
-magenta_claro	equ		13
-amarelo		equ		14
-branco_intenso	equ		15
+preto				equ			0
+azul				equ			1
+verde				equ			2
+cyan				equ			3
+vermelho			equ			4
+magenta				equ			5
+marrom				equ			6
+branco				equ			7
+cinza				equ			8
+azul_claro			equ			9
+verde_claro			equ			10
+cyan_claro			equ			11
+rosa				equ			12
+magenta_claro			equ			13
+amarelo				equ			14
+branco_intenso			equ			15
 
-modo_anterior	db		0
-linha   	dw  		0
-coluna  	dw  		0
-deltax		dw		0
-deltay		dw		0	
-mens    	db  		'Funcao Grafica'
+modo_anterior			db			0
+linha   			dw  			0
+coluna  			dw  			0
+deltax				dw			0
+deltay				dw			0	
+mens    			db  			'Funcao Grafica'
+mensagem_comando_invalido	db			'Comando Invalido'
+mensagem_jogada_invalida	db			'Jogada Invalida'
+
+caractere_a_ser_impresso	dw			0, 0, 0
+indice_caractere		dw			0
+
 ;*************************************************************************
 segment stack stack
-    		resb 		512
+	resb 	512
 stacktop:
