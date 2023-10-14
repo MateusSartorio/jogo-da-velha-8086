@@ -198,6 +198,42 @@ le_X:
 	; int 		21h
 
 le_C:
+	mov 		ax, 1
+	mov 		bx, 1
+	call 		desenha_x
+
+	mov 		ax, 1
+	mov 		bx, 2
+	call 		desenha_x
+
+	mov 		ax, 1
+	mov 		bx, 3
+	call 		desenha_x
+
+	mov 		ax, 2
+	mov 		bx, 1
+	call 		desenha_x
+
+	mov 		ax, 2
+	mov 		bx, 2
+	call 		desenha_x
+
+	mov 		ax, 2
+	mov 		bx, 3
+	call 		desenha_x
+
+	mov 		ax, 3
+	mov 		bx, 1
+	call 		desenha_x
+
+	mov 		ax, 3
+	mov 		bx, 2
+	call 		desenha_x
+
+	mov 		ax, 3
+	mov 		bx, 3
+	call 		desenha_x
+
 	mov		cx, 1
 	mov		bx, 0
 	mov 		dh, 23
@@ -285,6 +321,92 @@ l_1_2:
 	pop bx
 	pop ax
 
+	ret
+
+desenha_circulo:
+	push 		cx
+
+	mov		cx, 110
+
+	dec 		ax
+	mul 		cx
+	add 		ax, 210
+	push		ax
+
+	mov 		ax, bx
+	dec 		ax
+	mul 		cx
+	mov 		cx, ax
+	mov		ax, 415
+	sub		ax, cx
+	push		ax
+
+	mov		ax, 45
+	push		ax
+	
+	mov		byte[cor], azul
+	call		circle
+
+	pop cx
+
+	ret
+
+desenha_x:
+	push 		cx
+	push 		dx
+
+	mov		cx, 110
+
+	dec 		ax
+	mul 		cx
+	add 		ax, 210
+	sub		ax, 31
+	mov		word [x1], ax
+	add		ax, 62
+	mov		word [x2], ax
+
+	mov 		ax, bx
+	dec 		ax
+	mul 		cx
+	mov 		cx, ax
+	mov		ax, 415
+	sub		ax, cx
+	sub		ax, 31
+	mov		word [y1], ax
+	add		ax, 62
+	mov		word [y2], ax
+	
+	mov		byte[cor], verde
+	mov		ax, [x1]
+	push		ax
+	mov		ax, [y1]
+	push		ax
+	mov		ax, [x2]
+	push		ax
+	mov		ax, [y2]
+	push		ax
+	call 		line
+
+	mov 		ax, [y1]
+	add		ax, 62
+	mov		word [y1], ax
+	mov		ax, [y2]
+	sub		ax, 62
+	mov		word [y2], ax
+
+	mov		byte[cor], verde
+	mov		ax, [x1]
+	push		ax
+	mov		ax, [y1]
+	push		ax
+	mov		ax, [x2]
+	push		ax
+	mov		ax, [y2]
+	push		ax
+	call 		line
+
+	pop		dx
+	pop 		cx
 	ret
 
 ; desenhar retas
@@ -976,6 +1098,11 @@ mensagem_jogada_invalida	db			'Jogada Invalida'
 
 caractere_a_ser_impresso	dw			0, 0, 0
 indice_caractere		dw			0
+
+x1				dw			0
+y1				dw			0
+x2				dw			0
+y2				dw			0
 
 ;*************************************************************************
 segment stack stack
