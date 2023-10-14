@@ -204,6 +204,11 @@ le_X:
 
 	call		le_jogada
 
+	; checa se a ultima jogada nao foi de um X
+	cmp		byte [ultima_jogada], 1
+	je		jogada_invalida
+	mov		byte [ultima_jogada], 1
+
 	mov		byte [array_posicoes_jogadas + si], 1
 	mov		ax, 0
 	mov		al, [i]
@@ -223,6 +228,11 @@ le_C:
 
 	call		le_jogada
 
+	; checa se a ultima jogada nao foi de um Circulo
+	cmp		byte [ultima_jogada], 2
+	je		jogada_invalida
+	mov		byte [ultima_jogada], 2
+
 	mov		byte [array_posicoes_jogadas + si], 2
 	mov		ax, 0
 	mov		al, [i]
@@ -231,6 +241,10 @@ le_C:
 	call 		desenha_circulo
 	jmp 		le_entrada
 
+jogada_invalida:
+	call imprime_no_campo_mensagens
+	jmp 		le_entrada
+	
 le_jogada:
 	mov 		ah, 1
 	int 		21h
@@ -260,9 +274,6 @@ le_jogada:
 
 	ret
 
-jogada_invalida:
-	call imprime_no_campo_mensagens
-	jmp 		le_entrada
 
 calcula_indice_array_jogadas:
 	; p = (i - 1)*3 + j - 1
@@ -1131,6 +1142,12 @@ array_posicoes_jogadas		db			0, 0, 0, 0, 0, 0, 0, 0, 0
 i				db			0
 j				db			0
 p				db			0
+
+; ultima jogada
+; 0 se ninguem jogou ainda
+; 1 se X foi jogado por ultimo
+; 2 se Circulo foi jogado por ultimo
+ultima_jogada			db			0
 
 ;*************************************************************************
 segment stack stack
