@@ -194,54 +194,44 @@ sair:
 	int 		21h
 
 le_X:
-	; mov 		ah, 1
-	; int 		21h
+	mov		cx, 1
+	mov		bx, 0
+	mov 		dh, 23
+	mov		dl, 30
+	mov		byte [caractere_a_ser_impresso], 'X'
+	mov		byte [indice_caractere], 0
+	; call 		imprime_no_campo_comando
+
+	call		le_jogada
+
+	mov		byte [array_posicoes_jogadas + si], 1
+	mov		ax, 0
+	mov		al, [i]
+	mov		bx, 0
+	mov		bl, [j]
+	call 		desenha_x
+	jmp 		le_entrada
 
 le_C:
-	mov 		ax, 1
-	mov 		bx, 1
-	call 		desenha_x
-
-	mov 		ax, 1
-	mov 		bx, 2
-	call 		desenha_x
-
-	mov 		ax, 1
-	mov 		bx, 3
-	call 		desenha_x
-
-	mov 		ax, 2
-	mov 		bx, 1
-	call 		desenha_x
-
-	mov 		ax, 2
-	mov 		bx, 2
-	call 		desenha_x
-
-	mov 		ax, 2
-	mov 		bx, 3
-	call 		desenha_x
-
-	mov 		ax, 3
-	mov 		bx, 1
-	call 		desenha_x
-
-	mov 		ax, 3
-	mov 		bx, 2
-	call 		desenha_x
-
-	mov 		ax, 3
-	mov 		bx, 3
-	call 		desenha_x
-
 	mov		cx, 1
 	mov		bx, 0
 	mov 		dh, 23
 	mov		dl, 30
 	mov		byte [caractere_a_ser_impresso], 'C'
 	mov		byte [indice_caractere], 0
-	call 		imprime_no_campo_comando
+	; call 		imprime_no_campo_comando
 
+	call		le_jogada
+
+	mov		byte [array_posicoes_jogadas + si], 2
+	mov		ax, 0
+	mov		al, [i]
+	mov		bx, 0
+	mov		bl, [j]
+	call 		desenha_circulo
+	jmp 		le_entrada
+
+le_jogada:
 	mov 		ah, 1
 	int 		21h
 	mov		cx, 1
@@ -250,7 +240,7 @@ le_C:
 	mov		dl, 31
 	mov		byte [caractere_a_ser_impresso + 1], al
 	mov		byte [indice_caractere], 1
-	call 		imprime_no_campo_comando
+	; call 		imprime_no_campo_comando
 
 	mov 		ah, 1
 	int 		21h
@@ -260,25 +250,50 @@ le_C:
 	mov		dl, 32
 	mov		byte [caractere_a_ser_impresso + 2], al
 	mov		byte [indice_caractere], 2
-	call 		imprime_no_campo_comando
+	; call 		imprime_no_campo_comando
 
-	jmp 		le_entrada
+	call		calcula_posicao_i_j
 
-salva_contexto:
-	push 		ax
-	push		bx
-	push 		cx
-	push		dx
+	call		calcula_indice_array_jogadas
+	cmp		byte [array_posicoes_jogadas + si], 0
+	jne		jogada_invalida
 
 	ret
 
-recupera_contexto:
-	; recuperar contexto
-	pop 		dx
-	pop 		cx
-	pop 		bx
-	pop 		ax
+jogada_invalida:
+	call imprime_no_campo_mensagens
+	jmp 		le_entrada
 
+calcula_indice_array_jogadas:
+	; p = (i - 1)*3 + j - 1
+	mov		ax, 0
+	mov		al, [i]
+	dec		al
+	mov		bl, 3
+	mul		bl
+	mov		bl, [j]
+	add		al, bl
+	dec		al
+	mov		si, ax
+	ret
+
+calcula_posicao_i_j:
+	cmp		byte [caractere_a_ser_impresso + 1], '1'
+	jb		jogada_invalida
+	cmp		byte [caractere_a_ser_impresso + 1], '3'
+	jg		jogada_invalida
+	cmp		byte [caractere_a_ser_impresso + 2], '1'
+	jb		jogada_invalida
+	cmp		byte [caractere_a_ser_impresso + 2], '3'
+	jg		jogada_invalida
+	mov		ax, 0
+	mov		al, [caractere_a_ser_impresso + 1]
+	sub		al, 30h
+	mov		byte [i], al
+	mov		ax, 0
+	mov		al, [caractere_a_ser_impresso + 2]
+	sub		al, 30h
+	mov		byte [j], al
 	ret
 
 imprime_no_campo_comando:
@@ -1093,16 +1108,29 @@ coluna  			dw  			0
 deltax				dw			0
 deltay				dw			0	
 mens    			db  			'Funcao Grafica'
+
+; mensagens de erro impressas na tela ao longo do jogo
 mensagem_comando_invalido	db			'Comando Invalido'
 mensagem_jogada_invalida	db			'Jogada Invalida'
 
-caractere_a_ser_impresso	dw			0, 0, 0
-indice_caractere		dw			0
+; variaveis auxiliares usadas para imprimir o comando atual na tela
+caractere_a_ser_impresso	db			0, 0, 0
+indice_caractere		db			0
 
+; variaveis auxiliares usadas na impressao dos X's
 x1				dw			0
 y1				dw			0
 x2				dw			0
 y2				dw			0
+
+; array que armazena a situacao atual de cada celula do jogo da velha
+; 0 indica que nada foi jogado na posicao
+; 1 indica que X foi jogado na posicao
+; 2 indica que circulo foi jogado na posicao
+array_posicoes_jogadas		db			0, 0, 0, 0, 0, 0, 0, 0, 0
+i				db			0
+j				db			0
+p				db			0
 
 ;*************************************************************************
 segment stack stack
