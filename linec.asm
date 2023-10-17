@@ -27,143 +27,143 @@ segment code
 ; A partir daqui codigo desenvolvido pela gente
 desenha_ui:
 	; primeiro retangulo
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 65
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 65
+	push 	ax
+	call 	line
 
 	mov byte[cor], branco_intenso
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 65
-	push 		ax
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 65
-	push 		ax
-	call 		line
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 65
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 65
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 65
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 65
+	push 	ax
+	call 	line
 
 
 	; segundo retangulo
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 75
-	push 		ax
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 75
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 75
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 75
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 75
-	push 		ax
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 130
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 75
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 130
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 630
-	push 		ax
-	mov 		ax, 130
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 130
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 130
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 130
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 130
-	push 		ax
-	mov 		ax, 10
-	push 		ax
-	mov 		ax, 75
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 130
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 75
+	push 	ax
+	call 	line
 
 
 	; jogo da velha
 	; horizontal
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 155
-	push 		ax
-	mov 		ax, 250
-	push 		ax
-	mov 		ax, 485
-	push 		ax
-	mov 		ax, 250
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 155
+	push 	ax
+	mov 	ax, 250
+	push 	ax
+	mov 	ax, 485
+	push 	ax
+	mov 	ax, 250
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 155
-	push 		ax
-	mov 		ax, 360
-	push 		ax
-	mov 		ax, 485
-	push 		ax
-	mov 		ax, 360
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 155
+	push 	ax
+	mov 	ax, 360
+	push 	ax
+	mov 	ax, 485
+	push 	ax
+	mov 	ax, 360
+	push 	ax
+	call 	line
 
 	; vertical
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 265
-	push 		ax
-	mov 		ax, 140
-	push 		ax
-	mov 		ax, 265
-	push 		ax
-	mov 		ax, 470
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 265
+	push 	ax
+	mov 	ax, 140
+	push 	ax
+	mov 	ax, 265
+	push 	ax
+	mov 	ax, 470
+	push 	ax
+	call 	line
 
-	mov 		byte[cor], branco_intenso
-	mov 		ax, 375
-	push 		ax
-	mov 		ax, 140
-	push 		ax
-	mov 		ax, 375
-	push 		ax
-	mov 		ax, 470
-	push 		ax
-	call 		line
+	mov 	byte[cor], branco_intenso
+	mov 	ax, 375
+	push 	ax
+	mov 	ax, 140
+	push 	ax
+	mov 	ax, 375
+	push 	ax
+	mov 	ax, 470
+	push 	ax
+	call 	line
 
 le_novo_comando:
 	mov	byte [novo_comando], 0
@@ -252,18 +252,6 @@ loop_imprime_comando_invalido:
 ; novo_jogo:
 
 sair:
-	; primeiro retangulo
-	mov 	byte[cor], verde
-	mov 	ax, 10
-	push 	ax
-	mov 	ax, 310
-	push 	ax
-	mov 	ax, 630
-	push 	ax
-	mov 	ax, 10
-	push 	ax
-	call 	line
-
 	mov    	ah, 08h
 	int     21h
 	mov  	ah, 0   					; set video mode
@@ -298,6 +286,7 @@ jogada_x_valida:
 	mov	bx, 0
 	mov	bl, [j]
 	call 	desenha_x
+	call	imprime_jogada
 	jmp 	le_novo_comando
 
 le_C:
@@ -322,6 +311,7 @@ jogada_circulo_valida:
 	mov	bx, 0
 	mov	bl, [j]
 	call 	desenha_circulo
+	call	imprime_jogada
 	jmp 	le_novo_comando
 
 imprime_jogada_invalida:
@@ -338,6 +328,22 @@ loop_imprime_jogada_invalida:
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada_invalida
+	ret
+
+imprime_jogada:
+    	mov     cx, 3			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 23			;linha 0-29
+    	mov     dl, 39			;coluna 0-79
+	mov	byte[cor], verde
+
+loop_imprime_jogada:
+	call	cursor
+    	mov     al,[bx + novo_comando]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_jogada
 	ret
 
 ; p = (i - 1)*3 + j - 1
@@ -468,26 +474,26 @@ desenha_x:
 ;
 ; dh = linha (0-29) e  dl=coluna  (0-79)
 cursor:
-		pushf
-		push 		ax
-		push 		bx
-		push		cx
-		push		dx
-		push		si
-		push		di
-		push		bp
-		mov     	ah,2
-		mov     	bh,0
-		int     	10h
-		pop		bp
-		pop		di
-		pop		si
-		pop		dx
-		pop		cx
-		pop		bx
-		pop		ax
-		popf
-		ret
+	pushf
+	push 	ax
+	push 	bx
+	push	cx
+	push	dx
+	push	si
+	push	di
+	push	bp
+	mov     ah, 2
+	mov     bh, 0
+	int     10h
+	pop	bp
+	pop	di
+	pop	si
+	pop	dx
+	pop	cx
+	pop	bx
+	pop	ax
+	popf
+	ret
 ;_____________________________________________________________________________
 ;
 ;   funcao caracter escrito na posicao do cursor
@@ -495,28 +501,28 @@ cursor:
 ; al= caracter a ser escrito
 ; cor definida na variavel cor
 caracter:
-		pushf
-		push 		ax
-		push 		bx
-		push		cx
-		push		dx
-		push		si
-		push		di
-		push		bp
-		mov     	ah, 9
-		mov     	bh, 0
-		mov     	cx, 1
-   		mov     	bl, [cor]
-		int     	10h
-		pop			bp
-		pop			di
-		pop			si
-		pop			dx
-		pop			cx
-		pop			bx
-		pop			ax
-		popf
-		ret
+	pushf
+	push 	ax
+	push 	bx
+	push	cx
+	push	dx
+	push	si
+	push	di
+	push	bp
+	mov     ah, 9
+	mov     bh, 0
+	mov     cx, 1
+	mov     bl, [cor]
+	int     10h
+	pop	bp
+	pop	di
+	pop	si
+	pop	dx
+	pop	cx
+	pop	bx
+	pop	ax
+	popf
+	ret
 ;_____________________________________________________________________________
 ;
 ;   funcao plot_xy
@@ -524,31 +530,31 @@ caracter:
 ; push x; push y; call plot_xy;  (x<639, y<479)
 ; cor definida na variavel cor
 plot_xy:
-		push		bp
-		mov			bp,sp
-		pushf
-		push 		ax
-		push 		bx
-		push		cx
-		push		dx
-		push		si
-		push		di
-	    mov     	ah, 0ch
-	    mov     	al, [cor]
-	    mov     	bh, 0
-	    mov     	dx, 479
-		sub			dx, [bp+4]
-	    mov     	cx, [bp+6]
-	    int     	10h
-		pop			di
-		pop			si
-		pop			dx
-		pop			cx
-		pop			bx
-		pop			ax
-		popf
-		pop			bp
-		ret			4
+	push	bp
+	mov	bp, sp
+	pushf
+	push 	ax
+	push 	bx
+	push	cx
+	push	dx
+	push	si
+	push	di
+	mov     ah, 0ch
+	mov     al, [cor]
+	mov     bh, 0
+	mov     dx, 479
+	sub	dx, [bp+4]
+	mov     cx, [bp+6]
+	int     10h
+	pop	di
+	pop	si
+	pop	dx
+	pop	cx
+	pop	bx
+	pop	ax
+	popf
+	pop	bp
+	ret	4
 
 ;_____________________________________________________________________________
 ;    funcao circle
@@ -556,7 +562,7 @@ plot_xy:
 ; cor definida na variavel cor
 circle:
 	push 	bp
-	mov	 	bp,sp
+	mov	bp, sp
 	pushf                        ;coloca os flags na pilha
 	push 	ax
 	push 	bx
@@ -565,141 +571,140 @@ circle:
 	push	si
 	push	di
 	
-	mov		ax,[bp+8]    ; resgata xc
-	mov		bx,[bp+6]    ; resgata yc
-	mov		cx,[bp+4]    ; resgata r
+	mov	ax, [bp+8]    ; resgata xc
+	mov	bx, [bp+6]    ; resgata yc
+	mov	cx, [bp+4]    ; resgata r
 	
-	mov 	dx,bx	
-	add		dx,cx       ;ponto extremo superior
+	mov 	dx, bx	
+	add	dx, cx       ;ponto extremo superior
 	push    ax			
 	push	dx
-	call plot_xy
+	call 	plot_xy
 	
-	mov		dx,bx
-	sub		dx,cx       ;ponto extremo inferior
+	mov	dx, bx
+	sub	dx, cx       ;ponto extremo inferior
 	push    ax			
 	push	dx
-	call plot_xy
+	call 	plot_xy
 	
-	mov 	dx,ax	
-	add		dx,cx       ;ponto extremo direita
+	mov 	dx, ax	
+	add	dx, cx       ;ponto extremo direita
 	push    dx			
 	push	bx
-	call plot_xy
+	call 	plot_xy
 	
-	mov		dx,ax
-	sub		dx,cx       ;ponto extremo esquerda
+	mov	dx, ax
+	sub	dx, cx       ;ponto extremo esquerda
 	push    dx			
 	push	bx
-	call plot_xy
+	call 	plot_xy
 		
-	mov		di,cx
-	sub		di,1	 ;di=r-1
-	mov		dx,0  	;dx ser� a vari�vel x. cx � a variavel y
+	mov	di, cx
+	sub	di, 1	 ;di=r-1
+	mov	dx, 0  	;dx ser� a vari�vel x. cx � a variavel y
 	
 ;aqui em cima a l�gica foi invertida, 1-r => r-1
 ;e as compara��es passaram a ser jl => jg, assim garante 
 ;valores positivos para d
 
 stay:				;loop
-	mov		si,di
-	cmp		si,0
-	jg		inf       ;caso d for menor que 0, seleciona pixel superior (n�o  salta)
-	mov		si,dx		;o jl � importante porque trata-se de conta com sinal
-	sal		si,1		;multiplica por doi (shift arithmetic left)
-	add		si,3
-	add		di,si     ;nesse ponto d=d+2*dx+3
-	inc		dx		;incrementa dx
-	jmp		plotar
+	mov	si, di
+	cmp	si, 0
+	jg	inf       ;caso d for menor que 0, seleciona pixel superior (n�o  salta)
+	mov	si, dx		;o jl � importante porque trata-se de conta com sinal
+	sal	si, 1		;multiplica por doi (shift arithmetic left)
+	add	si, 3
+	add	di, si     ;nesse ponto d=d+2*dx+3
+	inc	dx		;incrementa dx
+	jmp	plotar
 inf:	
-	mov		si,dx
-	sub		si,cx  		;faz x - y (dx-cx), e salva em di 
-	sal		si,1
-	add		si,5
-	add		di,si		;nesse ponto d=d+2*(dx-cx)+5
-	inc		dx		;incrementa x (dx)
-	dec		cx		;decrementa y (cx)
+	mov	si, dx
+	sub	si, cx  		;faz x - y (dx-cx), e salva em di 
+	sal	si, 1
+	add	si, 5
+	add	di, si		;nesse ponto d=d+2*(dx-cx)+5
+	inc	dx		;incrementa x (dx)
+	dec	cx		;decrementa y (cx)
 	
 plotar:	
-	mov		si,dx
-	add		si,ax
+	mov	si, dx
+	add	si, ax
 	push    si			;coloca a abcisa x+xc na pilha
-	mov		si,cx
-	add		si,bx
+	mov	si, cx
+	add	si, bx
 	push    si			;coloca a ordenada y+yc na pilha
-	call plot_xy		;toma conta do segundo octante
-	mov		si,ax
-	add		si,dx
+	call 	plot_xy		;toma conta do segundo octante
+	mov	si, ax
+	add	si, dx
 	push    si			;coloca a abcisa xc+x na pilha
-	mov		si,bx
-	sub		si,cx
+	mov	si, bx
+	sub	si, cx
 	push    si			;coloca a ordenada yc-y na pilha
-	call plot_xy		;toma conta do s�timo octante
-	mov		si,ax
-	add		si,cx
+	call 	plot_xy		;toma conta do s�timo octante
+	mov	si, ax
+	add	si, cx
 	push    si			;coloca a abcisa xc+y na pilha
-	mov		si,bx
-	add		si,dx
+	mov	si, bx
+	add	si, dx
 	push    si			;coloca a ordenada yc+x na pilha
-	call plot_xy		;toma conta do segundo octante
-	mov		si,ax
-	add		si,cx
+	call 	plot_xy		;toma conta do segundo octante
+	mov	si, ax
+	add	si, cx
 	push    si			;coloca a abcisa xc+y na pilha
-	mov		si,bx
-	sub		si,dx
+	mov	si, bx
+	sub	si, dx
 	push    si			;coloca a ordenada yc-x na pilha
-	call plot_xy		;toma conta do oitavo octante
-	mov		si,ax
-	sub		si,dx
+	call 	plot_xy		;toma conta do oitavo octante
+	mov	si, ax
+	sub	si, dx
 	push    si			;coloca a abcisa xc-x na pilha
-	mov		si,bx
-	add		si,cx
+	mov	si, bx
+	add	si, cx
 	push    si			;coloca a ordenada yc+y na pilha
-	call plot_xy		;toma conta do terceiro octante
-	mov		si,ax
-	sub		si,dx
+	call 	plot_xy		;toma conta do terceiro octante
+	mov	si, ax
+	sub	si, dx
 	push    si			;coloca a abcisa xc-x na pilha
-	mov		si,bx
-	sub		si,cx
+	mov	si, bx
+	sub	si, cx
 	push    si			;coloca a ordenada yc-y na pilha
-	call plot_xy		;toma conta do sexto octante
-	mov		si,ax
-	sub		si,cx
+	call 	plot_xy		;toma conta do sexto octante
+	mov	si, ax
+	sub	si, cx
 	push    si			;coloca a abcisa xc-y na pilha
-	mov		si,bx
-	sub		si,dx
+	mov	si, bx
+	sub	si, dx
 	push    si			;coloca a ordenada yc-x na pilha
-	call plot_xy		;toma conta do quinto octante
-	mov		si,ax
-	sub		si,cx
+	call 	plot_xy		;toma conta do quinto octante
+	mov	si, ax
+	sub	si, cx
 	push    si			;coloca a abcisa xc-y na pilha
-	mov		si,bx
-	add		si,dx
+	mov	si, bx
+	add	si, dx
 	push    si			;coloca a ordenada yc-x na pilha
-	call plot_xy		;toma conta do quarto octante
+	call 	plot_xy		;toma conta do quarto octante
 	
-	cmp		cx,dx
-	jb		fim_circle  ;se cx (y) est� abaixo de dx (x), termina     
-	jmp		stay		;se cx (y) est� acima de dx (x), continua no loop
-	
+	cmp	cx, dx
+	jb	fim_circle  ;se cx (y) est� abaixo de dx (x), termina     
+	jmp	stay		;se cx (y) est� acima de dx (x), continua no loop
 	
 fim_circle:
-	pop		di
-	pop		si
-	pop		dx
-	pop		cx
-	pop		bx
-	pop		ax
+	pop	di
+	pop	si
+	pop	dx
+	pop	cx
+	pop	bx
+	pop	ax
 	popf
-	pop		bp
-	ret		6
+	pop	bp
+	ret	6
 ;-----------------------------------------------------------------------------
 ;    fun��o full_circle
 ;	 push xc; push yc; push r; call full_circle;  (xc+r<639,yc+r<479)e(xc-r>0,yc-r>0)
 ; cor definida na variavel cor					  
 full_circle:
 	push 	bp
-	mov	 	bp,sp
+	mov	bp, sp
 	pushf                        ;coloca os flags na pilha
 	push 	ax
 	push 	bx
