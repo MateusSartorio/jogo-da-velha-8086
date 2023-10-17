@@ -226,9 +226,9 @@ processa_novo_comando:
 	cmp 	byte [novo_comando], 's'
 	je 	sair
 	cmp 	byte [novo_comando], 'X'
-	je 	le_X
+	je 	processa_jogada_X
 	cmp 	byte [novo_comando], 'C'
-	je 	le_C_intermediario
+	je 	processa_jogada_C_intermediario
 	call 	imprime_comando_invalido
 	jmp 	le_novo_comando
 
@@ -261,10 +261,10 @@ sair:
 	mov 	ah, 4ch
 	int 	21h
 
-le_C_intermediario:
-	jmp	le_C
+processa_jogada_C_intermediario:
+	jmp	processa_jogada_C
 
-le_X:
+processa_jogada_X:
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
 	cmp	byte [array_posicoes_jogadas + si], 0
@@ -287,9 +287,10 @@ jogada_x_valida:
 	mov	bl, [j]
 	call 	desenha_x
 	call	imprime_jogada
+	call	atualiza_estado_da_partida
 	jmp 	le_novo_comando
 
-le_C:
+processa_jogada_C:
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
 	cmp	byte [array_posicoes_jogadas + si], 0
@@ -312,6 +313,7 @@ jogada_circulo_valida:
 	mov	bl, [j]
 	call 	desenha_circulo
 	call	imprime_jogada
+	call	atualiza_estado_da_partida
 	jmp 	le_novo_comando
 
 imprime_jogada_invalida:
@@ -323,7 +325,7 @@ imprime_jogada_invalida:
 
 loop_imprime_jogada_invalida:
 	call	cursor
-    	mov     al,[bx + mensagem_jogada_invalida]
+    	mov     al, [bx + mensagem_jogada_invalida]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
@@ -335,15 +337,126 @@ imprime_jogada:
     	mov     bx, 0
     	mov     dh, 23			;linha 0-29
     	mov     dl, 39			;coluna 0-79
-	mov	byte[cor], verde
+	mov	byte [cor], verde
 
 loop_imprime_jogada:
 	call	cursor
-    	mov     al,[bx + novo_comando]
+    	mov     al, [bx + novo_comando]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada
+	ret
+
+atualiza_estado_da_partida:
+	push 	ax
+
+	; verifica horizontalmente
+	mov	al, byte [array_posicoes_jogadas + 1]
+	cmp	al, 0
+	je	partida_nao_acabou_1
+	cmp 	al, byte [array_posicoes_jogadas]
+	jne	partida_nao_acabou_1
+	cmp	al, byte [array_posicoes_jogadas + 2]
+	jne	partida_nao_acabou_1
+	jmp	partida_acabou
+
+partida_nao_acabou_1:
+	mov	al, byte [array_posicoes_jogadas + 4]
+	cmp	al, 0
+	je	partida_nao_acabou_2
+	cmp 	al, byte [array_posicoes_jogadas + 3]
+	jne	partida_nao_acabou_2
+	cmp	al, byte [array_posicoes_jogadas + 5]
+	jne	partida_nao_acabou_2
+	jmp	partida_acabou
+
+partida_nao_acabou_2:
+	mov	al, byte [array_posicoes_jogadas + 7]
+	cmp	al, 0
+	je	partida_nao_acabou_3
+	cmp 	al, byte [array_posicoes_jogadas + 6]
+	jne	partida_nao_acabou_3
+	cmp	al, byte [array_posicoes_jogadas + 8]
+	jne	partida_nao_acabou_3
+	jmp	partida_acabou
+
+; verifica verticalmente
+partida_nao_acabou_3:
+	mov	al, byte [array_posicoes_jogadas + 3]
+	cmp	al, 0
+	je	partida_nao_acabou_4
+	cmp 	al, byte [array_posicoes_jogadas + 0]
+	jne	partida_nao_acabou_4
+	cmp	al, byte [array_posicoes_jogadas + 6]
+	jne	partida_nao_acabou_4
+	jmp	partida_acabou
+
+partida_nao_acabou_4:
+	mov	al, byte [array_posicoes_jogadas + 1]
+	cmp	al, 0
+	je	partida_nao_acabou_5
+	cmp 	al, byte [array_posicoes_jogadas + 4]
+	jne	partida_nao_acabou_5
+	cmp	al, byte [array_posicoes_jogadas + 7]
+	jne	partida_nao_acabou_5
+	jmp	partida_acabou
+
+partida_nao_acabou_5:
+	mov	al, byte [array_posicoes_jogadas + 2]
+	cmp	al, 0
+	je	partida_nao_acabou_6
+	cmp 	al, byte [array_posicoes_jogadas + 5]
+	jne	partida_nao_acabou_6
+	cmp	al, byte [array_posicoes_jogadas + 8]
+	jne	partida_nao_acabou_6
+	jmp	partida_acabou
+
+; verifica diagonalmente
+partida_nao_acabou_6:
+	mov	al, byte [array_posicoes_jogadas + 0]
+	cmp	al, 0
+	je	partida_nao_acabou_7
+	cmp 	al, byte [array_posicoes_jogadas + 4]
+	jne	partida_nao_acabou_7
+	cmp	al, byte [array_posicoes_jogadas + 8]
+	jne	partida_nao_acabou_7
+	jmp	partida_acabou
+
+partida_nao_acabou_7:
+	mov	al, byte [array_posicoes_jogadas + 6]
+	cmp	al, 0
+	je	partida_nao_acabou_8
+	cmp 	al, byte [array_posicoes_jogadas + 4]
+	jne	partida_nao_acabou_8
+	cmp	al, byte [array_posicoes_jogadas + 2]
+	jne	partida_nao_acabou_8
+	jmp	partida_acabou
+
+partida_nao_acabou_8:
+	pop 	ax
+	ret
+
+partida_acabou:
+	call	imprime_partida_acabou
+	mov	byte [estado_partida], al
+	pop 	ax
+	ret
+
+imprime_partida_acabou:
+    	mov     cx, 14			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 39			;coluna 0-79
+	mov	byte [cor], verde
+
+loop_imprime_partida_acabou:
+	call	cursor
+    	mov     al, [bx + mensgem_partida_acabou]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_partida_acabou
 	ret
 
 ; p = (i - 1)*3 + j - 1
@@ -403,7 +516,7 @@ desenha_circulo:
 	mov	ax, 45
 	push	ax
 	
-	mov	byte[cor], azul
+	mov	byte[cor], magenta
 	call	circle
 
 	pop 	cx
@@ -1043,6 +1156,7 @@ mens    			db  			'Funcao Grafica'
 ; mensagens de erro impressas na tela ao longo do jogo
 mensagem_comando_invalido	db			'Comando Invalido'
 mensagem_jogada_invalida	db			'Jogada Invalida'
+mensgem_partida_acabou		db			'Partida Acabou'
 
 ; armazena o novo comando que esta sendo digitado
 novo_comando			db			0, 0, 0
@@ -1068,11 +1182,11 @@ p				db			0
 ; 2 se Circulo foi jogado por ultimo
 ultima_jogada			db			0
 
-; situacao do jogo
+; estado da partida
 ; 0 ninguem ganhou
 ; 1 se X ganhou o jogo
-; 2 se Circulo ganhou o jogo
-situacao_jogo			db			0
+; 2 se Circulo ganhou jogo
+estado_partida			db			0
 
 ;*************************************************************************
 segment stack stack
