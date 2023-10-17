@@ -8,549 +8,459 @@
 
 segment code
 ..start:
-	mov 		ax, data
-	mov 		ds, ax
-	mov 		ax, stack
-	mov 		ss, ax
-	mov 		sp, stacktop
+	mov 	ax, data
+	mov 	ds, ax
+	mov 	ax, stack
+	mov 	ss, ax
+	mov 	sp, stacktop
 
 ; salva modo atual de video (vendo como esta o modo de video da maquina)
-	mov  		ah, 0Fh
-	int  		10h
-	mov  		[modo_anterior], al   
+	mov  	ah, 0Fh
+	int  	10h
+	mov  	[modo_anterior], al   
 
 ; altera modo de video para grafico 640x480 16 cores
-	mov     	al, 12h
-	mov     	ah, 0
-	int     	10h
+	mov     al, 12h
+	mov     ah, 0
+	int     10h
 
 ; A partir daqui codigo desenvolvido pela gente
 desenha_ui:
 	; primeiro retangulo
-	mov byte[cor], branco_intenso
-	mov ax, 10
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 630
-	push ax
-	mov ax, 10
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	call 		line
+
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 65
+	push 		ax
+	call 		line
 
 	mov byte[cor], branco_intenso
-	mov ax, 630
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 630
-	push ax
-	mov ax, 65
-	push ax
-	call line
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 65
+	push 		ax
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 65
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 10
-	push ax
-	mov ax, 65
-	push ax
-	mov ax, 630
-	push ax
-	mov ax, 65
-	push ax
-	call line
-
-	mov byte[cor], branco_intenso
-	mov ax, 10
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 65
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 65
+	push 		ax
+	call 		line
 
 
 	; segundo retangulo
-	mov byte[cor], branco_intenso
-	mov ax, 10
-	push ax
-	mov ax, 75
-	push ax
-	mov ax, 630
-	push ax
-	mov ax, 75
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 75
+	push 		ax
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 75
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 630
-	push ax
-	mov ax, 75
-	push ax
-	mov ax, 630
-	push ax
-	mov ax, 130
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 75
+	push 		ax
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 130
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 630
-	push ax
-	mov ax, 130
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 130
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 630
+	push 		ax
+	mov 		ax, 130
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 130
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 10
-	push ax
-	mov ax, 130
-	push ax
-	mov ax, 10
-	push ax
-	mov ax, 75
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 130
+	push 		ax
+	mov 		ax, 10
+	push 		ax
+	mov 		ax, 75
+	push 		ax
+	call 		line
 
 
 	; jogo da velha
 	; horizontal
-	mov byte[cor], branco_intenso
-	mov ax, 155
-	push ax
-	mov ax, 250
-	push ax
-	mov ax, 485
-	push ax
-	mov ax, 250
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 155
+	push 		ax
+	mov 		ax, 250
+	push 		ax
+	mov 		ax, 485
+	push 		ax
+	mov 		ax, 250
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 155
-	push ax
-	mov ax, 360
-	push ax
-	mov ax, 485
-	push ax
-	mov ax, 360
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 155
+	push 		ax
+	mov 		ax, 360
+	push 		ax
+	mov 		ax, 485
+	push 		ax
+	mov 		ax, 360
+	push 		ax
+	call 		line
 
 	; vertical
-	mov byte[cor], branco_intenso
-	mov ax, 265
-	push ax
-	mov ax, 140
-	push ax
-	mov ax, 265
-	push ax
-	mov ax, 470
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 265
+	push 		ax
+	mov 		ax, 140
+	push 		ax
+	mov 		ax, 265
+	push 		ax
+	mov 		ax, 470
+	push 		ax
+	call 		line
 
-	mov byte[cor], branco_intenso
-	mov ax, 375
-	push ax
-	mov ax, 140
-	push ax
-	mov ax, 375
-	push ax
-	mov ax, 470
-	push ax
-	call line
+	mov 		byte[cor], branco_intenso
+	mov 		ax, 375
+	push 		ax
+	mov 		ax, 140
+	push 		ax
+	mov 		ax, 375
+	push 		ax
+	mov 		ax, 470
+	push 		ax
+	call 		line
 
-le_entrada:
-	mov 		ah, 1
-	int 		21h
-	cmp 		al, 'c'
-	je 		novo_jogo
-	cmp 		al, 's'
-	je 		sair
-	cmp 		al, 'X'
-	je 		le_X
-	cmp 		al, 'C'
-	je 		le_C
-	call 		imprime_no_campo_mensagens
-	jmp 		le_entrada
-
-novo_jogo:
-
-sair:
-	mov    		ah, 08h
-	int     	21h
-	mov  		ah, 0   					; set video mode
-	mov  		al, [modo_anterior]   				; modo anterior
-	int  		10h
-	mov     	ax, 4c00h
-	int     	21h
-
-	mov 		ah, 4ch
-	int 		21h
-
-le_X:
-	mov		cx, 1
-	mov		bx, 0
-	mov 		dh, 23
-	mov		dl, 30
-	mov		byte [caractere_a_ser_impresso], 'X'
-	mov		byte [indice_caractere], 0
-	; call 		imprime_no_campo_comando
-
-	call		le_jogada
-
-	; checa se a ultima jogada nao foi de um X
-	cmp		byte [ultima_jogada], 1
-	je		jogada_invalida
-	mov		byte [ultima_jogada], 1
-
-	mov		byte [array_posicoes_jogadas + si], 1
-	mov		ax, 0
-	mov		al, [i]
-	mov		bx, 0
-	mov		bl, [j]
-	call 		desenha_x
-	jmp 		le_entrada
-
-le_C:
-	mov		cx, 1
-	mov		bx, 0
-	mov 		dh, 23
-	mov		dl, 30
-	mov		byte [caractere_a_ser_impresso], 'C'
-	mov		byte [indice_caractere], 0
-	; call 		imprime_no_campo_comando
-
-	call		le_jogada
-
-	; checa se a ultima jogada nao foi de um Circulo
-	cmp		byte [ultima_jogada], 2
-	je		jogada_invalida
-	mov		byte [ultima_jogada], 2
-
-	mov		byte [array_posicoes_jogadas + si], 2
-	mov		ax, 0
-	mov		al, [i]
-	mov		bx, 0
-	mov		bl, [j]
-	call 		desenha_circulo
-	jmp 		le_entrada
-
-jogada_invalida:
-	call imprime_no_campo_mensagens
-	jmp 		le_entrada
+le_novo_comando:
+	mov	byte [novo_comando], 0
+	mov	byte [novo_comando + 1], 0
+	mov	byte [novo_comando + 2], 0
 	
-le_jogada:
-	mov 		ah, 1
-	int 		21h
-	mov		cx, 1
-	mov		bx, 0
-	mov 		dh, 23
-	mov		dl, 31
-	mov		byte [caractere_a_ser_impresso + 1], al
-	mov		byte [indice_caractere], 1
-	; call 		imprime_no_campo_comando
+	mov	bx, 0
+loop_le_novo_comando:
+	mov 	ah, 1
+	int 	21h
 
-	mov 		ah, 1
-	int 		21h
-	mov		cx, 1
-	mov		bx, 0
-	mov 		dh, 23
-	mov		dl, 32
-	mov		byte [caractere_a_ser_impresso + 2], al
-	mov		byte [indice_caractere], 2
-	; call 		imprime_no_campo_comando
+	cmp	al, 0Dh
+	je	leu_line_feed
+	
+	cmp	al, 08h
+	je	leu_backspace
+	jmp	nao_leu_backspace
 
-	call		calcula_posicao_i_j
+leu_backspace:
+	cmp	bx, 0
+	je	loop_le_novo_comando
 
-	call		calcula_indice_array_jogadas
-	cmp		byte [array_posicoes_jogadas + si], 0
-	jne		jogada_invalida
+	cmp	bx, 3
+	jge	buffer_excedido
+
+	mov	byte [novo_comando + bx], 0
+	
+buffer_excedido:
+	dec	bx
+	jmp	loop_le_novo_comando
+
+nao_leu_backspace:
+	cmp	bx, 3
+	jge	excedeu_tamanho_comando
+	
+	mov	byte [novo_comando + bx], al
+	inc	bx
+	jmp 	loop_le_novo_comando
+
+leu_line_feed:
+	cmp	bx, 0
+	je	loop_le_novo_comando
+
+	cmp	bx, 3
+	jg	apertou_enter_com_comando_muito_grande
+
+	jmp	processa_novo_comando
+
+apertou_enter_com_comando_muito_grande:
+	call 	imprime_comando_invalido
+	jmp 	le_novo_comando
+
+excedeu_tamanho_comando:
+	inc	bx
+	jmp 	loop_le_novo_comando
+
+processa_novo_comando:
+	; cmp 	al, 'c'
+	; je 	novo_jogo
+	cmp 	byte [novo_comando], 's'
+	je 	sair
+	cmp 	byte [novo_comando], 'X'
+	je 	le_X
+	cmp 	byte [novo_comando], 'C'
+	je 	le_C_intermediario
+	call 	imprime_comando_invalido
+	jmp 	le_novo_comando
+
+imprime_comando_invalido:
+    	mov     cx, 16			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 30			;coluna 0-79
+	mov	byte[cor], vermelho
+
+loop_imprime_comando_invalido:
+	call	cursor
+    	mov     al,[bx + mensagem_comando_invalido]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_comando_invalido
 
 	ret
 
+; novo_jogo:
 
+sair:
+	; primeiro retangulo
+	mov 	byte[cor], verde
+	mov 	ax, 10
+	push 	ax
+	mov 	ax, 310
+	push 	ax
+	mov 	ax, 630
+	push 	ax
+	mov 	ax, 10
+	push 	ax
+	call 	line
+
+	mov    	ah, 08h
+	int     21h
+	mov  	ah, 0   					; set video mode
+	mov  	al, [modo_anterior]   				; modo anterior
+	int  	10h
+
+	mov 	ah, 4ch
+	int 	21h
+
+le_C_intermediario:
+	jmp	le_C
+
+le_X:
+	call	calcula_posicao_i_j
+	call	calcula_indice_array_jogadas
+	cmp	byte [array_posicoes_jogadas + si], 0
+	jne	jogada_x_invalida
+	cmp	byte [ultima_jogada], 1
+	je	jogada_x_invalida
+	jmp	jogada_x_valida
+
+jogada_x_invalida:
+	call 	imprime_jogada_invalida
+	jmp 	le_novo_comando
+
+jogada_x_valida:
+	mov	byte [ultima_jogada], 1
+	mov	byte [array_posicoes_jogadas + si], 1
+
+	mov	ax, 0
+	mov	al, [i]
+	mov	bx, 0
+	mov	bl, [j]
+	call 	desenha_x
+	jmp 	le_novo_comando
+
+le_C:
+	call	calcula_posicao_i_j
+	call	calcula_indice_array_jogadas
+	cmp	byte [array_posicoes_jogadas + si], 0
+	jne	jogada_x_invalida
+	cmp	byte [ultima_jogada], 2
+	je	jogada_circulo_invalida
+	jmp	jogada_circulo_valida
+
+jogada_circulo_invalida:
+	call 	imprime_jogada_invalida
+	jmp 	le_novo_comando
+
+jogada_circulo_valida:
+	mov	byte [ultima_jogada], 2
+	mov	byte [array_posicoes_jogadas + si], 1
+
+	mov	ax, 0
+	mov	al, [i]
+	mov	bx, 0
+	mov	bl, [j]
+	call 	desenha_circulo
+	jmp 	le_novo_comando
+
+imprime_jogada_invalida:
+    	mov     cx, 16			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 30			;coluna 0-79
+	mov	byte[cor], vermelho
+
+loop_imprime_jogada_invalida:
+	call	cursor
+    	mov     al,[bx + mensagem_jogada_invalida]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_jogada_invalida
+	ret
+
+; p = (i - 1)*3 + j - 1
 calcula_indice_array_jogadas:
-	; p = (i - 1)*3 + j - 1
-	mov		ax, 0
-	mov		al, [i]
-	dec		al
-	mov		bl, 3
-	mul		bl
-	mov		bl, [j]
-	add		al, bl
-	dec		al
-	mov		si, ax
+	mov	ax, 0
+	mov	al, [i]
+	dec	al
+	mov	bl, 3
+	mul	bl
+	mov	bl, [j]
+	add	al, bl
+	dec	al
+	mov	si, ax
 	ret
 
 calcula_posicao_i_j:
-	cmp		byte [caractere_a_ser_impresso + 1], '1'
-	jb		jogada_invalida
-	cmp		byte [caractere_a_ser_impresso + 1], '3'
-	jg		jogada_invalida
-	cmp		byte [caractere_a_ser_impresso + 2], '1'
-	jb		jogada_invalida
-	cmp		byte [caractere_a_ser_impresso + 2], '3'
-	jg		jogada_invalida
-	mov		ax, 0
-	mov		al, [caractere_a_ser_impresso + 1]
-	sub		al, 30h
-	mov		byte [i], al
-	mov		ax, 0
-	mov		al, [caractere_a_ser_impresso + 2]
-	sub		al, 30h
-	mov		byte [j], al
+	cmp	byte [novo_comando + 1], '1'
+	jb	jogada_invalida
+	cmp	byte [novo_comando + 1], '3'
+	jg	jogada_invalida
+	cmp	byte [novo_comando + 2], '1'
+	jb	jogada_invalida
+	cmp	byte [novo_comando + 2], '3'
+	jg	jogada_invalida
+	mov	ax, 0
+	mov	al, [novo_comando + 1]
+	sub	al, 30h
+	mov	byte [i], al
+	mov	ax, 0
+	mov	al, [novo_comando + 2]
+	sub	al, 30h
+	mov	byte [j], al
 	ret
 
-imprime_no_campo_comando:
-	mov		byte[cor], branco_intenso
-l_1_1:
-	call		cursor
-	mov		bl, [indice_caractere]
-	mov		bh, 0
-	mov     	al, [bx + caractere_a_ser_impresso]
-	call		caracter
-	inc     	bx						; proximo caracter
-	inc		dl						; avanca a coluna
-	loop    	l_1_1
-
-	ret
-
-imprime_no_campo_mensagens:
-	; salva contexto
-	push 		ax
-	push		bx
-	push 		cx
-	push		dx
-
-	mov     	cx, 16						; numero de caracteres
-	mov     	bx, 0
-	mov     	dh, 27						; linha 0-29
-	mov     	dl, 30						; coluna 0-79
-	mov		byte[cor], vermelho
-l_1_2:
-	call		cursor
-	mov     	al, [bx + mensagem_comando_invalido]
-	call		caracter
-	inc     	bx						; proximo caracter
-	inc		dl						; avanca a coluna
-	loop    	l_1_2
-
-	; recupera contexto
-	pop dx
-	pop cx
-	pop bx
-	pop ax
-
-	ret
+jogada_invalida:
+	call	imprime_jogada_invalida
+	jmp	le_novo_comando
 
 desenha_circulo:
-	push 		cx
+	push 	cx
 
-	mov		cx, 110
+	mov	cx, 110
 
-	dec 		ax
-	mul 		cx
-	add 		ax, 210
-	push		ax
+	dec 	ax
+	mul 	cx
+	add 	ax, 210
+	push	ax
 
-	mov 		ax, bx
-	dec 		ax
-	mul 		cx
-	mov 		cx, ax
-	mov		ax, 415
-	sub		ax, cx
-	push		ax
+	mov 	ax, bx
+	dec 	ax
+	mul 	cx
+	mov 	cx, ax
+	mov	ax, 415
+	sub	ax, cx
+	push	ax
 
-	mov		ax, 45
-	push		ax
+	mov	ax, 45
+	push	ax
 	
-	mov		byte[cor], azul
-	call		circle
+	mov	byte[cor], azul
+	call	circle
 
-	pop cx
+	pop 	cx
 
 	ret
 
 desenha_x:
-	push 		cx
-	push 		dx
+	push 	cx
+	push 	dx
 
-	mov		cx, 110
+	mov	cx, 110
 
-	dec 		ax
-	mul 		cx
-	add 		ax, 210
-	sub		ax, 31
-	mov		word [x1], ax
-	add		ax, 62
-	mov		word [x2], ax
+	dec 	ax
+	mul 	cx
+	add 	ax, 210
+	sub	ax, 31
+	mov	word [x1], ax
+	add	ax, 62
+	mov	word [x2], ax
 
-	mov 		ax, bx
-	dec 		ax
-	mul 		cx
-	mov 		cx, ax
-	mov		ax, 415
-	sub		ax, cx
-	sub		ax, 31
-	mov		word [y1], ax
-	add		ax, 62
-	mov		word [y2], ax
+	mov 	ax, bx
+	dec 	ax
+	mul 	cx
+	mov 	cx, ax
+	mov	ax, 415
+	sub	ax, cx
+	sub	ax, 31
+	mov	word [y1], ax
+	add	ax, 62
+	mov	word [y2], ax
 	
-	mov		byte[cor], verde
-	mov		ax, [x1]
-	push		ax
-	mov		ax, [y1]
-	push		ax
-	mov		ax, [x2]
-	push		ax
-	mov		ax, [y2]
-	push		ax
-	call 		line
+	mov	byte[cor], verde
+	mov	ax, [x1]
+	push	ax
+	mov	ax, [y1]
+	push	ax
+	mov	ax, [x2]
+	push	ax
+	mov	ax, [y2]
+	push	ax
+	call 	line
 
-	mov 		ax, [y1]
-	add		ax, 62
-	mov		word [y1], ax
-	mov		ax, [y2]
-	sub		ax, 62
-	mov		word [y2], ax
+	mov 	ax, [y1]
+	add	ax, 62
+	mov	word [y1], ax
+	mov	ax, [y2]
+	sub	ax, 62
+	mov	word [y2], ax
 
-	mov		byte[cor], verde
-	mov		ax, [x1]
-	push		ax
-	mov		ax, [y1]
-	push		ax
-	mov		ax, [x2]
-	push		ax
-	mov		ax, [y2]
-	push		ax
-	call 		line
+	mov	byte[cor], verde
+	mov	ax, [x1]
+	push	ax
+	mov	ax, [y1]
+	push	ax
+	mov	ax, [x2]
+	push	ax
+	mov	ax, [y2]
+	push	ax
+	call 	line
 
-	pop		dx
-	pop 		cx
+	pop	dx
+	pop 	cx
 	ret
-
-; desenhar retas
-		; mov		byte[cor],branco_intenso	;antenas
-		; mov		ax,20
-		; push		ax
-		; mov		ax,400
-		; push		ax
-		; mov		ax,620
-		; push		ax
-		; mov		ax,400
-		; push		ax
-		; call		line
-		
-		; mov		byte[cor],marrom	;antenas
-		; mov		ax,130
-		; push		ax
-		; mov		ax,270
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; mov		ax,300
-		; push		ax
-		; call		line
-		
-		; mov		ax,130
-		; push		ax
-		; mov		ax,130
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; call		line
-				
-; desenha circulos 
-		; mov		byte[cor],azul	;cabe�a
-		; mov		ax,200
-		; push		ax
-		; mov		ax,200
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; call	circle
-
-		; mov		byte[cor],verde	;corpo
-		; mov		ax,450
-		; push		ax
-		; mov		ax,200
-		; push		ax
-		; mov		ax,190
-		; push		ax
-		; call	circle
-		
-		; mov		ax,100	;circulos das antenas
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; mov		ax,10
-		; push		ax
-		; call	circle
-		
-		; mov		ax,100
-		; push		ax
-		; mov		ax,300
-		; push		ax
-		; mov		ax,10
-		; push		ax
-		; call	circle
-		
-		; mov		byte[cor],vermelho	;circulos vermelhos
-		; mov		ax,500
-		; push		ax
-		; mov		ax,300
-		; push		ax
-		; mov		ax,50
-		; push		ax
-		; call	full_circle
-		
-		; mov		ax,500
-		; push		ax
-		; mov		ax,100
-		; push		ax
-		; mov		ax,50
-		; push		ax
-		; call	full_circle
-		
-		; mov		ax,350
-		; push		ax
-		; mov		ax,200
-		; push		ax
-		; mov		ax,50
-		; push		ax
-		; call	full_circle
-		
-
-; escrever uma mensagem
-;     	mov     	cx,14			;n�mero de caracteres
-;     	mov     	bx,0
-;     	mov     	dh,0			;linha 0-29
-;     	mov     	dl,30			;coluna 0-79
-; 		mov		byte[cor],azul
-; l4:
-; 		call	cursor
-;     	mov     al,[bx+mens]
-; 		call	caracter
-;     	inc     bx			;proximo caracter
-; 		inc		dl			;avanca a coluna
-; 		inc		byte [cor]		;mudar a cor para a seguinte
-;     	loop    l4
-
-; 		mov    	ah,08h
-; 		int     21h
-; 	    mov  	ah,0   			; set video mode
-; 	    mov  	al,[modo_anterior]   	; modo anterior
-; 	    int  	10h
-; 		mov     ax,4c00h
-; 		int     21h
 
 ;***************************************************************************
 ;
@@ -1124,9 +1034,8 @@ mens    			db  			'Funcao Grafica'
 mensagem_comando_invalido	db			'Comando Invalido'
 mensagem_jogada_invalida	db			'Jogada Invalida'
 
-; variaveis auxiliares usadas para imprimir o comando atual na tela
-caractere_a_ser_impresso	db			0, 0, 0
-indice_caractere		db			0
+; armazena o novo comando que esta sendo digitado
+novo_comando			db			0, 0, 0
 
 ; variaveis auxiliares usadas na impressao dos X's
 x1				dw			0
@@ -1147,7 +1056,7 @@ p				db			0
 ; 0 se ninguem jogou ainda
 ; 1 se X foi jogado por ultimo
 ; 2 se Circulo foi jogado por ultimo
-ultima_jogada			db			0
+ultima_jogada			db			0		
 
 ;*************************************************************************
 segment stack stack
