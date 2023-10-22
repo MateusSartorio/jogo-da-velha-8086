@@ -237,22 +237,23 @@ imprime_comando_invalido:
     	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
-    	mov     dl, 30			;coluna 0-79
+    	mov     dl, 32			;coluna 0-79
 	mov	byte [cor], vermelho
 
 loop_imprime_comando_invalido:
 	call	cursor
-    	mov     al,[bx + mensagem_comando_invalido]
+    	mov     al, [bx + mensagem_comando_invalido]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_comando_invalido
 
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
 	ret
 
 le_novo_comando_intermediario:
 	jmp le_novo_comando
-	
+
 ; novo_jogo:
 
 sair:
@@ -310,7 +311,7 @@ processa_jogada_C:
 	mov	si, 0
 	mov	si, word [p]
 	cmp	byte [array_posicoes_jogadas + si], 0
-	jne	jogada_x_invalida
+	jne	jogada_circulo_invalida
 	cmp	byte [ultima_jogada], 2
 	je	jogada_circulo_invalida
 	jmp	jogada_circulo_valida
@@ -338,7 +339,7 @@ imprime_jogada_invalida:
     	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
-    	mov     dl, 30			;coluna 0-79
+    	mov     dl, 32			;coluna 0-79
 	mov	byte [cor], vermelho
 
 loop_imprime_jogada_invalida:
@@ -348,14 +349,27 @@ loop_imprime_jogada_invalida:
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada_invalida
+
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
 	ret
 
 imprime_jogada:
     	mov     cx, 3			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 23			;linha 0-29
-    	mov     dl, 39			;coluna 0-79
+    	mov     dl, 38			;coluna 0-79
+	cmp	byte [ultima_jogada], 1
+	je	coloca_na_cor_do_x
+	cmp	byte [ultima_jogada], 2
+	je	coloca_na_cor_do_circulo
+
+coloca_na_cor_do_x:
 	mov	byte [cor], verde
+	jmp	loop_imprime_jogada
+
+coloca_na_cor_do_circulo:
+	mov	byte [cor], magenta
+	jmp	loop_imprime_jogada
 
 loop_imprime_jogada:
 	call	cursor
@@ -364,6 +378,25 @@ loop_imprime_jogada:
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada
+
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	ret
+
+volta_cursor_para_0x0_e_apaga_input_anterior:
+    	mov     cx, 3			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 0			;linha 0-29
+    	mov     dl, 0			;coluna 0-79
+	mov	byte [cor], preto
+
+loop_apaga_input:
+	call	cursor
+    	mov     al, [bx + string_vazia]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_apaga_input
+
 	ret
 
 atualiza_estado_da_partida:
@@ -496,17 +529,42 @@ partida_nao_acabou_8:
 	ret
 
 partida_acabou:
-	call	imprime_partida_acabou
+	mov	al, byte [ultima_jogada]
 	mov	byte [estado_partida], al
+	call	imprime_partida_acabou
 	pop 	ax
 	ret
 
 imprime_partida_acabou:
-    	mov     cx, 14			;n�mero de caracteres
+	cmp	byte [estado_partida], 1
+	je	configura_para_x
+	cmp	byte [estado_partida], 2
+	je	configura_para_circulo
+	jmp	configura_para_empate
+
+configura_para_x:
+    	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
-    	mov     dl, 39			;coluna 0-79
+    	mov     dl, 26			;coluna 0-79
 	mov	byte [cor], verde
+	jmp 	loop_imprime_partida_acabou
+
+configura_para_circulo:
+    	mov     cx, 16			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 23			;coluna 0-79
+	mov	byte [cor], magenta
+	jmp 	loop_imprime_partida_acabou
+
+configura_para_empate:
+    	mov     cx, 16			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 27			;coluna 0-79
+	mov	byte [cor], vermelho
+	jmp 	loop_imprime_partida_acabou
 
 loop_imprime_partida_acabou:
 	call	cursor
@@ -515,11 +573,79 @@ loop_imprime_partida_acabou:
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_partida_acabou
+
+	cmp	byte [estado_partida], 1
+	je	chama_imprime_x_ganhou
+	cmp	byte [estado_partida], 2
+	je	chama_imprime_circulo_ganhou
+	jmp	chama_imprime_empate
+
+chama_imprime_x_ganhou:
+	call 	imprime_x_ganhou
+	ret
+
+chama_imprime_circulo_ganhou:
+	call	imprime_circulo_ganhou
+	ret
+
+chama_imprime_empate:
+	call	imprime_partida_empatou
+	ret
+
+imprime_x_ganhou:
+    	mov     cx, 11			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 42			;coluna 0-79
+
+loop_imprime_x_ganhou:
+	call	cursor
+    	mov     al, [bx + mensagem_x_venceu]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_x_ganhou
+
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	ret
+
+imprime_circulo_ganhou:
+    	mov     cx, 17			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 39			;coluna 0-79
+
+loop_imprime_circulo_ganhou:
+	call	cursor
+    	mov     al, [bx + mensagem_circulo_venceu]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_circulo_ganhou
+
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	ret
+
+imprime_partida_empatou:
+    	mov     cx, 9			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 43			;coluna 0-79
+
+loop_imprime_empate:
+	call	cursor
+    	mov     al, [bx + mensagem_empate]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_imprime_empate
+
+	call	volta_cursor_para_0x0_e_apaga_input_anterior
 	ret
 
 desenha_linha_de_vitoria:
 	push	ax
-	mov	byte[cor], marrom
+	mov	byte [cor], vermelho
 	mov	ax, [x1]
 	push	ax
 	mov	ax, [y1]
@@ -595,7 +721,7 @@ desenha_circulo:
 	mov	ax, 45
 	push	ax
 	
-	mov	byte[cor], magenta
+	mov	byte [cor], magenta
 	call	circle
 
 	pop 	cx
@@ -645,7 +771,7 @@ desenha_x:
 	sub	ax, 62
 	mov	word [y2], ax
 
-	mov	byte[cor], verde
+	mov	byte [cor], verde
 	mov	ax, [x1]
 	push	ax
 	mov	ax, [y1]
@@ -735,8 +861,8 @@ plot_xy:
 	mov     al, [cor]
 	mov     bh, 0
 	mov     dx, 479
-	sub	dx, [bp+4]
-	mov     cx, [bp+6]
+	sub	dx, [bp + 4]
+	mov     cx, [bp + 6]
 	int     10h
 	pop	di
 	pop	si
@@ -763,9 +889,9 @@ circle:
 	push	si
 	push	di
 	
-	mov	ax, [bp+8]    ; resgata xc
-	mov	bx, [bp+6]    ; resgata yc
-	mov	cx, [bp+4]    ; resgata r
+	mov	ax, [bp + 8]    ; resgata xc
+	mov	bx, [bp + 6]    ; resgata yc
+	mov	cx, [bp + 4]    ; resgata r
 	
 	mov 	dx, bx	
 	add	dx, cx       ;ponto extremo superior
@@ -905,9 +1031,9 @@ full_circle:
 	push	si
 	push	di
 
-	mov	ax, [bp+8]    ; resgata xc
-	mov	bx, [bp+6]    ; resgata yc
-	mov	cx, [bp+4]    ; resgata r
+	mov	ax, [bp + 8]    ; resgata xc
+	mov	bx, [bp + 6]    ; resgata yc
+	mov	cx, [bp + 4]    ; resgata r
 	
 	mov	si, bx
 	sub	si, cx
@@ -1234,8 +1360,13 @@ mens    			db  			'Funcao Grafica'
 
 ; mensagens de erro impressas na tela ao longo do jogo
 mensagem_comando_invalido	db			'Comando Invalido'
-mensagem_jogada_invalida	db			'Jogada Invalida'
-mensgem_partida_acabou		db			'Partida Acabou'
+; o espaço a mais em jogada invalida eh para que a mensagem tenha 16 caracteres igual comando invalido
+mensagem_jogada_invalida	db			'Jogada Invalida '
+mensgem_partida_acabou		db			'Partida Acabou: '
+mensagem_circulo_venceu		db			'Circulo Venceu!!!'
+mensagem_empate			db			'Empate :('
+mensagem_x_venceu		db			'X Venceu!!!'
+string_vazia			db			'xxx'
 
 ; armazena o novo comando que esta sendo digitado
 novo_comando			db			0, 0, 0
@@ -1262,9 +1393,10 @@ p				dw			0
 ultima_jogada			db			0
 
 ; estado da partida
-; 0 ninguem ganhou
+; 0 se o jogo nao terminou
 ; 1 se X ganhou o jogo
 ; 2 se Circulo ganhou jogo
+; 3 se o jogo empatou
 estado_partida			db			0
 
 ;*************************************************************************
