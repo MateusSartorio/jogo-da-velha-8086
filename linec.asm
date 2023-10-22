@@ -237,7 +237,7 @@ imprime_comando_invalido:
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
     	mov     dl, 30			;coluna 0-79
-	mov	byte[cor], vermelho
+	mov	byte [cor], vermelho
 
 loop_imprime_comando_invalido:
 	call	cursor
@@ -267,6 +267,8 @@ processa_jogada_C_intermediario:
 processa_jogada_X:
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
+	mov	si, 0
+	mov	si, word [p]
 	cmp	byte [array_posicoes_jogadas + si], 0
 	jne	jogada_x_invalida
 	cmp	byte [ultima_jogada], 1
@@ -279,6 +281,8 @@ jogada_x_invalida:
 
 jogada_x_valida:
 	mov	byte [ultima_jogada], 1
+	mov	si, 0
+	mov	si, word [p]
 	mov	byte [array_posicoes_jogadas + si], 1
 
 	mov	ax, 0
@@ -293,6 +297,8 @@ jogada_x_valida:
 processa_jogada_C:
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
+	mov	si, 0
+	mov	si, word [p]
 	cmp	byte [array_posicoes_jogadas + si], 0
 	jne	jogada_x_invalida
 	cmp	byte [ultima_jogada], 2
@@ -305,7 +311,9 @@ jogada_circulo_invalida:
 
 jogada_circulo_valida:
 	mov	byte [ultima_jogada], 2
-	mov	byte [array_posicoes_jogadas + si], 1
+	mov	si, 0
+	mov	si, word [p]
+	mov	byte [array_posicoes_jogadas + si], 2
 
 	mov	ax, 0
 	mov	al, [i]
@@ -321,7 +329,7 @@ imprime_jogada_invalida:
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
     	mov     dl, 30			;coluna 0-79
-	mov	byte[cor], vermelho
+	mov	byte [cor], vermelho
 
 loop_imprime_jogada_invalida:
 	call	cursor
@@ -352,85 +360,125 @@ atualiza_estado_da_partida:
 	push 	ax
 
 	; verifica horizontalmente
-	mov	al, byte [array_posicoes_jogadas + 1]
+	mov	al, byte [array_posicoes_jogadas + 3]
 	cmp	al, 0
 	je	partida_nao_acabou_1
-	cmp 	al, byte [array_posicoes_jogadas]
+	cmp 	al, byte [array_posicoes_jogadas + 0]
 	jne	partida_nao_acabou_1
-	cmp	al, byte [array_posicoes_jogadas + 2]
+	cmp	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_1
+	mov	word [x1], 165
+	mov	word [y1], 415
+	mov	word [x2], 475
+	mov	word [y2], 415
+	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
 
 partida_nao_acabou_1:
 	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_2
-	cmp 	al, byte [array_posicoes_jogadas + 3]
+	cmp 	al, byte [array_posicoes_jogadas + 1]
 	jne	partida_nao_acabou_2
-	cmp	al, byte [array_posicoes_jogadas + 5]
+	cmp	al, byte [array_posicoes_jogadas + 7]
 	jne	partida_nao_acabou_2
+	mov	word [x1], 165
+	mov	word [y1], 305
+	mov	word [x2], 475
+	mov	word [y2], 305
+	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
 
 partida_nao_acabou_2:
-	mov	al, byte [array_posicoes_jogadas + 7]
+	mov	al, byte [array_posicoes_jogadas + 5]
 	cmp	al, 0
 	je	partida_nao_acabou_3
-	cmp 	al, byte [array_posicoes_jogadas + 6]
+	cmp 	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_3
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_3
+	mov	word [x1], 165
+	mov	word [y1], 195
+	mov	word [x2], 475
+	mov	word [y2], 195
+	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
 
 ; verifica verticalmente
 partida_nao_acabou_3:
-	mov	al, byte [array_posicoes_jogadas + 3]
+	mov	al, byte [array_posicoes_jogadas + 1]
 	cmp	al, 0
 	je	partida_nao_acabou_4
 	cmp 	al, byte [array_posicoes_jogadas + 0]
 	jne	partida_nao_acabou_4
-	cmp	al, byte [array_posicoes_jogadas + 6]
+	cmp	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_4
+	mov	word [x1], 210
+	mov	word [y1], 150
+	mov	word [x2], 210
+	mov	word [y2], 460
+	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
 partida_nao_acabou_4:
-	mov	al, byte [array_posicoes_jogadas + 1]
+	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_5
-	cmp 	al, byte [array_posicoes_jogadas + 4]
+	cmp 	al, byte [array_posicoes_jogadas + 3]
 	jne	partida_nao_acabou_5
-	cmp	al, byte [array_posicoes_jogadas + 7]
+	cmp	al, byte [array_posicoes_jogadas + 5]
 	jne	partida_nao_acabou_5
+	mov	word [x1], 320
+	mov	word [y1], 150
+	mov	word [x2], 320
+	mov	word [y2], 460
+	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
 partida_nao_acabou_5:
-	mov	al, byte [array_posicoes_jogadas + 2]
+	mov	al, byte [array_posicoes_jogadas + 7]
 	cmp	al, 0
 	je	partida_nao_acabou_6
-	cmp 	al, byte [array_posicoes_jogadas + 5]
+	cmp 	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_6
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_6
+	mov	word [x1], 430
+	mov	word [y1], 150
+	mov	word [x2], 430
+	mov	word [y2], 460
+	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
 ; verifica diagonalmente
 partida_nao_acabou_6:
-	mov	al, byte [array_posicoes_jogadas + 0]
+	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_7
-	cmp 	al, byte [array_posicoes_jogadas + 4]
+	cmp 	al, byte [array_posicoes_jogadas + 0]
 	jne	partida_nao_acabou_7
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_7
+	mov	word [x1], 210
+	mov	word [y1], 415
+	mov	word [x2], 440
+	mov	word [y2], 195
+	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
 partida_nao_acabou_7:
-	mov	al, byte [array_posicoes_jogadas + 6]
+	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_8
-	cmp 	al, byte [array_posicoes_jogadas + 4]
+	cmp 	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_8
-	cmp	al, byte [array_posicoes_jogadas + 2]
+	cmp	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_8
+	mov	word [x1], 210
+	mov	word [y1], 195
+	mov	word [x2], 430
+	mov	word [y2], 415
+	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
 partida_nao_acabou_8:
@@ -459,8 +507,26 @@ loop_imprime_partida_acabou:
     	loop    loop_imprime_partida_acabou
 	ret
 
+desenha_linha_de_vitoria:
+	push	ax
+	mov	byte[cor], marrom
+	mov	ax, [x1]
+	push	ax
+	mov	ax, [y1]
+	push	ax
+	mov	ax, [x2]
+	push	ax
+	mov	ax, [y2]
+	push	ax
+	call 	line
+	pop	ax
+	ret
+
 ; p = (i - 1)*3 + j - 1
 calcula_indice_array_jogadas:
+	push 	ax
+	push	bx
+
 	mov	ax, 0
 	mov	al, [i]
 	dec	al
@@ -469,7 +535,10 @@ calcula_indice_array_jogadas:
 	mov	bl, [j]
 	add	al, bl
 	dec	al
-	mov	si, ax
+	mov	word [p], ax
+	
+	pop 	bx
+	pop	ax
 	ret
 
 calcula_posicao_i_j:
@@ -955,10 +1024,10 @@ line:
 	push	dx
 	push	si
 	push	di
-	mov	ax, [bp+10]   ; resgata os valores das coordenadas
-	mov	bx, [bp+8]    ; resgata os valores das coordenadas
-	mov	cx, [bp+6]    ; resgata os valores das coordenadas
-	mov	dx, [bp+4]    ; resgata os valores das coordenadas
+	mov	ax, [bp + 10]   ; resgata os valores das coordenadas
+	mov	bx, [bp + 8]    ; resgata os valores das coordenadas
+	mov	cx, [bp + 6]    ; resgata os valores das coordenadas
+	mov	dx, [bp + 4]    ; resgata os valores das coordenadas
 	cmp	ax, cx
 	je	line2
 	jb	line1
@@ -1174,7 +1243,7 @@ y2				dw			0
 array_posicoes_jogadas		db			0, 0, 0, 0, 0, 0, 0, 0, 0
 i				db			0
 j				db			0
-p				db			0
+p				dw			0
 
 ; ultima jogada
 ; 0 se ninguem jogou ainda
