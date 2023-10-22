@@ -24,10 +24,15 @@ segment code
 	mov     ah, 0
 	int     10h
 
+	call	desenha_ui
+	jmp	le_novo_comando
+
 ; A partir daqui codigo desenvolvido pela gente
 desenha_ui:
+	push 	ax
+
 	; primeiro retangulo
-	mov 	byte[cor], branco_intenso
+	mov 	byte [cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 10
@@ -38,7 +43,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 630
 	push 	ax
 	mov 	ax, 10
@@ -49,7 +53,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov byte[cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 65
@@ -60,7 +63,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 10
@@ -73,7 +75,6 @@ desenha_ui:
 
 
 	; segundo retangulo
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 75
@@ -84,7 +85,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 630
 	push 	ax
 	mov 	ax, 75
@@ -95,7 +95,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 630
 	push 	ax
 	mov 	ax, 130
@@ -106,7 +105,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 130
@@ -116,11 +114,9 @@ desenha_ui:
 	mov 	ax, 75
 	push 	ax
 	call 	line
-
 
 	; jogo da velha
 	; horizontal
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 155
 	push 	ax
 	mov 	ax, 250
@@ -131,7 +127,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 155
 	push 	ax
 	mov 	ax, 360
@@ -143,7 +138,6 @@ desenha_ui:
 	call 	line
 
 	; vertical
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 265
 	push 	ax
 	mov 	ax, 140
@@ -154,7 +148,6 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	mov 	byte[cor], branco_intenso
 	mov 	ax, 375
 	push 	ax
 	mov 	ax, 140
@@ -164,6 +157,9 @@ desenha_ui:
 	mov 	ax, 470
 	push 	ax
 	call 	line
+
+	pop 	ax
+	ret
 
 le_novo_comando:
 	mov	byte [novo_comando], 0
@@ -221,19 +217,37 @@ excedeu_tamanho_comando:
 	jmp 	loop_le_novo_comando
 
 processa_novo_comando:
-	; cmp 	al, 'c'
-	; je 	novo_jogo
+	cmp 	byte [novo_comando], 'c'
+	je 	novo_jogo
 	cmp 	byte [novo_comando], 's'
-	je 	sair
+	je 	sair_intermediario
 	cmp 	byte [novo_comando], 'X'
-	je 	processa_jogada_X
+	je 	processa_jogada_x_intermediario
 	cmp 	byte [novo_comando], 'C'
-	je 	processa_jogada_C_intermediario
+	je 	processa_jogada_circulo_intermediario
 	call 	imprime_comando_invalido
 	jmp 	le_novo_comando
 
+limpa_campo_mensagens:
+    	mov     cx, 41			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 27			;linha 0-29
+    	mov     dl, 19			;coluna 0-79
+	mov	byte [cor], preto
+
+loop_limpa_campo_mensagens:
+	call	cursor
+    	mov     al, [bx + string_vazia]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_limpa_campo_mensagens
+
+	ret
 
 imprime_comando_invalido:
+	call	limpa_campo_mensagens
+
     	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
@@ -248,13 +262,84 @@ loop_imprime_comando_invalido:
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_comando_invalido
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
-le_novo_comando_intermediario:
-	jmp le_novo_comando
+processa_jogada_x_intermediario:
+	jmp	processa_jogada_x
 
-; novo_jogo:
+sair_intermediario:
+	jmp	sair
+
+le_novo_comando_intermediario:
+	jmp 	le_novo_comando
+
+processa_jogada_circulo_intermediario:
+	jmp	processa_jogada_circulo
+
+novo_jogo:
+	push	cx
+	push	si
+
+	; reseta array de posicoes jogadas
+	mov	cx, 9
+loop_reseta_array_posicoes_jogadas:
+	mov	si, cx
+	dec	si
+	mov	byte [array_posicoes_jogadas + si], 0
+	loop	loop_reseta_array_posicoes_jogadas
+
+	; reseta a ultima jogada e o estado da partida
+	mov	byte [ultima_jogada], 0
+	mov	byte [estado_partida], 0
+
+	call	limpa_tela
+	call	desenha_ui
+
+	pop	si
+	pop	cx
+
+	jmp	le_novo_comando
+
+
+limpa_tela:
+	push	ax
+	push	bx
+	push	cx
+	push	dx
+
+	mov	byte [cor], preto
+	
+	mov	cx, 30
+loop_exterior:
+	mov	ax, cx
+	dec	ax
+	push 	cx
+
+	mov     cx, 80			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, al			;linha 0-29
+    	mov     dl, 0			;coluna 0-79
+
+loop_interior:
+	call	cursor
+    	mov     al, byte [bx + string_vazia]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_interior
+
+	pop	cx
+	loop 	loop_exterior
+
+	call	volta_cursor_para_0x0
+
+	pop	dx
+	pop	cx
+	pop	bx
+	pop	ax
+	ret
+
 
 sair:
 	mov    	ah, 08h
@@ -265,12 +350,10 @@ sair:
 	mov     ax, 4c00h
 	int     21h
 
-processa_jogada_C_intermediario:
-	jmp	processa_jogada_C
 
-processa_jogada_X:
+processa_jogada_x:
 	cmp	byte [estado_partida], 0
-	jne	le_novo_comando_intermediario
+	jne	jogada_x_invalida
 
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
@@ -297,9 +380,9 @@ jogada_x_valida:
 	call	atualiza_estado_da_partida
 	jmp 	le_novo_comando_intermediario
 
-processa_jogada_C:
+processa_jogada_circulo:
 	cmp	byte [estado_partida], 0
-	jne	le_novo_comando_intermediario
+	jne	jogada_circulo_invalida
 
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
@@ -327,7 +410,9 @@ jogada_circulo_valida:
 	jmp 	le_novo_comando_intermediario
 
 imprime_jogada_invalida:
-    	mov     cx, 16			;n�mero de caracteres
+	call	limpa_campo_mensagens
+    	
+	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 27			;linha 0-29
     	mov     dl, 32			;coluna 0-79
@@ -341,7 +426,7 @@ loop_imprime_jogada_invalida:
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada_invalida
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
 imprime_jogada:
@@ -370,23 +455,24 @@ loop_imprime_jogada:
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_jogada
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
-volta_cursor_para_0x0_e_apaga_input_anterior:
-    	mov     cx, 3			;n�mero de caracteres
+volta_cursor_para_0x0:
+	push	bx
+	push	cx
+	push	dx
+
+    	mov     cx, 0			;n�mero de caracteres
     	mov     bx, 0
     	mov     dh, 0			;linha 0-29
     	mov     dl, 0			;coluna 0-79
 	mov	byte [cor], preto
-
-loop_apaga_input:
 	call	cursor
-    	mov     al, [bx + string_vazia]
-	call	caracter
-    	inc     bx			;proximo caracter
-	inc	dl			;avanca a coluna
-    	loop    loop_apaga_input
+
+	pop	dx
+	pop	cx
+	pop	bx
 
 	ret
 
@@ -621,7 +707,7 @@ loop_imprime_x_ganhou:
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_x_ganhou
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
 imprime_circulo_ganhou:
@@ -632,13 +718,13 @@ imprime_circulo_ganhou:
 
 loop_imprime_circulo_ganhou:
 	call	cursor
-    	mov     al, [bx + mensagem_circulo_venceu]
+    	mov     al, byte [bx + mensagem_circulo_venceu]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_circulo_ganhou
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
 imprime_partida_empatou:
@@ -649,25 +735,25 @@ imprime_partida_empatou:
 
 loop_imprime_empate:
 	call	cursor
-    	mov     al, [bx + mensagem_empate]
+    	mov     al, byte [bx + mensagem_empate]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
     	loop    loop_imprime_empate
 
-	call	volta_cursor_para_0x0_e_apaga_input_anterior
+	call	volta_cursor_para_0x0
 	ret
 
 desenha_linha_de_vitoria:
 	push	ax
 	mov	byte [cor], vermelho
-	mov	ax, [x1]
+	mov	ax, word [x1]
 	push	ax
-	mov	ax, [y1]
+	mov	ax, word [y1]
 	push	ax
-	mov	ax, [x2]
+	mov	ax, word [x2]
 	push	ax
-	mov	ax, [y2]
+	mov	ax, word [y2]
 	push	ax
 	call 	line
 	pop	ax
@@ -1389,7 +1475,7 @@ mensgem_partida_acabou		db			'Partida Acabou: '
 mensagem_circulo_venceu		db			'Circulo Venceu!!!'
 mensagem_empate			db			'Empate :('
 mensagem_x_venceu		db			'X Venceu!!!'
-string_vazia			db			'xxx'
+string_vazia			db			'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 ; armazena o novo comando que esta sendo digitado
 novo_comando			db			0, 0, 0
