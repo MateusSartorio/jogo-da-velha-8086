@@ -401,6 +401,7 @@ loop_apaga_input:
 
 atualiza_estado_da_partida:
 	push 	ax
+	push	cx
 
 	; verifica horizontalmente
 	mov	al, byte [array_posicoes_jogadas + 3]
@@ -415,7 +416,7 @@ atualiza_estado_da_partida:
 	mov	word [x2], 485
 	mov	word [y2], 415
 	call	desenha_linha_de_vitoria 
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_1:
 	mov	al, byte [array_posicoes_jogadas + 4]
@@ -430,7 +431,7 @@ partida_nao_acabou_1:
 	mov	word [x2], 485
 	mov	word [y2], 305
 	call	desenha_linha_de_vitoria 
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_2:
 	mov	al, byte [array_posicoes_jogadas + 5]
@@ -445,7 +446,7 @@ partida_nao_acabou_2:
 	mov	word [x2], 485
 	mov	word [y2], 195
 	call	desenha_linha_de_vitoria 
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 ; verifica verticalmente
 partida_nao_acabou_3:
@@ -461,7 +462,7 @@ partida_nao_acabou_3:
 	mov	word [x2], 210
 	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_4:
 	mov	al, byte [array_posicoes_jogadas + 4]
@@ -476,7 +477,7 @@ partida_nao_acabou_4:
 	mov	word [x2], 320
 	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_5:
 	mov	al, byte [array_posicoes_jogadas + 7]
@@ -491,7 +492,7 @@ partida_nao_acabou_5:
 	mov	word [x2], 430
 	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 ; verifica diagonalmente
 partida_nao_acabou_6:
@@ -507,7 +508,7 @@ partida_nao_acabou_6:
 	mov	word [x2], 485
 	mov	word [y2], 140
 	call	desenha_linha_de_vitoria
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_7:
 	mov	al, byte [array_posicoes_jogadas + 4]
@@ -522,16 +523,39 @@ partida_nao_acabou_7:
 	mov	word [x2], 485
 	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
-	jmp	partida_acabou
+	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_8:
+	mov	cx, 9
+
+partida_nao_acabou_8_loop:
+	mov	si, cx
+	cmp	byte [array_posicoes_jogadas + si], 0
+	je	ainda_tem_posicoes_nao_jogadas
+	loop	partida_nao_acabou_8_loop
+
+	jmp partida_acabou_em_empate
+
+ainda_tem_posicoes_nao_jogadas:
+	jmp partida_nao_acabou_9
+
+partida_nao_acabou_9:
+	pop	cx
 	pop 	ax
 	ret
 
-partida_acabou:
+partida_acabou_em_vitoria:
 	mov	al, byte [ultima_jogada]
 	mov	byte [estado_partida], al
 	call	imprime_partida_acabou
+	pop	cx
+	pop 	ax
+	ret
+
+partida_acabou_em_empate:
+	mov	byte [estado_partida], 3
+	call	imprime_partida_acabou
+	pop	cx
 	pop 	ax
 	ret
 

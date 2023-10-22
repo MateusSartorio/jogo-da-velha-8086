@@ -7,7 +7,6 @@ Monte o diretório do repositório no DOSBox...
 Completar isso daqui depois
 
 ## Ainda a ser feito
-3. O programa nao reconhece quando o jogo terminou em empate ainda
 4. Corrigir o bug com as mensagens impressas
   3.1 Texto que aparece no canto superior esquerdo quando se esta digitando esta bugado
   3.2 Antes de se imprimir uma nova mensagem menor que a anterior deve-se limpar a a que estava antes
