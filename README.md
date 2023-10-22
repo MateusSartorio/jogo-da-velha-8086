@@ -7,9 +7,7 @@ Monte o diretório do repositório no DOSBox...
 Completar isso daqui depois
 
 ## Ainda a ser feito
-1. Corrigir o bug com as mensagens impressas
-  1.1 Texto que aparece no canto superior esquerdo quando se esta digitando esta bugado
-  1.2 Antes de se imprimir uma nova mensagem menor que a anterior deve-se limpar a a que estava antes
+1. Texto que aparece no canto superior esquerdo quando se esta digitando esta bugado
 2. Generalizar as funcoes de impressao de texto, que estão muito repetitivas sem necessidade
 3. Modularizar o código
 4. Comentar código
