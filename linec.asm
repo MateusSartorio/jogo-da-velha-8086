@@ -262,9 +262,8 @@ sair:
 	mov  	ah, 0   					; set video mode
 	mov  	al, [modo_anterior]   				; modo anterior
 	int  	10h
-
-	mov 	ah, 4ch
-	int 	21h
+	mov     ax, 4c00h
+	int     21h
 
 processa_jogada_C_intermediario:
 	jmp	processa_jogada_C
@@ -293,10 +292,6 @@ jogada_x_valida:
 	mov	si, word [p]
 	mov	byte [array_posicoes_jogadas + si], 1
 
-	mov	ax, 0
-	mov	al, [i]
-	mov	bx, 0
-	mov	bl, [j]
 	call 	desenha_x
 	call	imprime_jogada
 	call	atualiza_estado_da_partida
@@ -326,10 +321,6 @@ jogada_circulo_valida:
 	mov	si, word [p]
 	mov	byte [array_posicoes_jogadas + si], 2
 
-	mov	ax, 0
-	mov	al, [i]
-	mov	bx, 0
-	mov	bl, [j]
 	call 	desenha_circulo
 	call	imprime_jogada
 	call	atualiza_estado_da_partida
@@ -404,12 +395,12 @@ atualiza_estado_da_partida:
 	push	cx
 
 	; verifica horizontalmente
-	mov	al, byte [array_posicoes_jogadas + 3]
+	mov	al, byte [array_posicoes_jogadas + 1]
 	cmp	al, 0
 	je	partida_nao_acabou_1
 	cmp 	al, byte [array_posicoes_jogadas + 0]
 	jne	partida_nao_acabou_1
-	cmp	al, byte [array_posicoes_jogadas + 6]
+	cmp	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_1
 	mov	word [x1], 155
 	mov	word [y1], 415
@@ -422,9 +413,9 @@ partida_nao_acabou_1:
 	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_2
-	cmp 	al, byte [array_posicoes_jogadas + 1]
+	cmp 	al, byte [array_posicoes_jogadas + 3]
 	jne	partida_nao_acabou_2
-	cmp	al, byte [array_posicoes_jogadas + 7]
+	cmp	al, byte [array_posicoes_jogadas + 5]
 	jne	partida_nao_acabou_2
 	mov	word [x1], 155
 	mov	word [y1], 305
@@ -434,10 +425,10 @@ partida_nao_acabou_1:
 	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_2:
-	mov	al, byte [array_posicoes_jogadas + 5]
+	mov	al, byte [array_posicoes_jogadas + 7]
 	cmp	al, 0
 	je	partida_nao_acabou_3
-	cmp 	al, byte [array_posicoes_jogadas + 2]
+	cmp 	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_3
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_3
@@ -450,12 +441,12 @@ partida_nao_acabou_2:
 
 ; verifica verticalmente
 partida_nao_acabou_3:
-	mov	al, byte [array_posicoes_jogadas + 1]
+	mov	al, byte [array_posicoes_jogadas + 3]
 	cmp	al, 0
 	je	partida_nao_acabou_4
 	cmp 	al, byte [array_posicoes_jogadas + 0]
 	jne	partida_nao_acabou_4
-	cmp	al, byte [array_posicoes_jogadas + 2]
+	cmp	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_4
 	mov	word [x1], 210
 	mov	word [y1], 140
@@ -468,9 +459,9 @@ partida_nao_acabou_4:
 	mov	al, byte [array_posicoes_jogadas + 4]
 	cmp	al, 0
 	je	partida_nao_acabou_5
-	cmp 	al, byte [array_posicoes_jogadas + 3]
+	cmp 	al, byte [array_posicoes_jogadas + 1]
 	jne	partida_nao_acabou_5
-	cmp	al, byte [array_posicoes_jogadas + 5]
+	cmp	al, byte [array_posicoes_jogadas + 7]
 	jne	partida_nao_acabou_5
 	mov	word [x1], 320
 	mov	word [y1], 140
@@ -480,10 +471,10 @@ partida_nao_acabou_4:
 	jmp	partida_acabou_em_vitoria
 
 partida_nao_acabou_5:
-	mov	al, byte [array_posicoes_jogadas + 7]
+	mov	al, byte [array_posicoes_jogadas + 5]
 	cmp	al, 0
 	je	partida_nao_acabou_6
-	cmp 	al, byte [array_posicoes_jogadas + 6]
+	cmp 	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_6
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_6
@@ -725,16 +716,20 @@ jogada_invalida:
 	jmp	le_novo_comando
 
 desenha_circulo:
+	push	ax
 	push 	cx
 
 	mov	cx, 110
 
+	mov	ax, 0
+	mov	al, byte [j]
 	dec 	ax
 	mul 	cx
 	add 	ax, 210
 	push	ax
 
-	mov 	ax, bx
+	mov	ax, 0
+	mov	al, byte [i]
 	dec 	ax
 	mul 	cx
 	mov 	cx, ax
@@ -749,15 +744,18 @@ desenha_circulo:
 	call	circle
 
 	pop 	cx
+	pop	ax
 
 	ret
 
 desenha_x:
+	push	ax
 	push 	cx
-	push 	dx
 
 	mov	cx, 110
 
+	mov	ax, 0
+	mov	al, byte [j]
 	dec 	ax
 	mul 	cx
 	add 	ax, 210
@@ -766,7 +764,8 @@ desenha_x:
 	add	ax, 62
 	mov	word [x2], ax
 
-	mov 	ax, bx
+	mov	ax, 0
+	mov	al, byte [i]
 	dec 	ax
 	mul 	cx
 	mov 	cx, ax
@@ -806,8 +805,8 @@ desenha_x:
 	push	ax
 	call 	line
 
-	pop	dx
 	pop 	cx
+	pop	ax
 	ret
 
 ;***************************************************************************
