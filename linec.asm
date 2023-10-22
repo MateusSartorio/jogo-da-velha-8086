@@ -367,9 +367,9 @@ atualiza_estado_da_partida:
 	jne	partida_nao_acabou_1
 	cmp	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_1
-	mov	word [x1], 165
+	mov	word [x1], 155
 	mov	word [y1], 415
-	mov	word [x2], 475
+	mov	word [x2], 485
 	mov	word [y2], 415
 	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
@@ -382,9 +382,9 @@ partida_nao_acabou_1:
 	jne	partida_nao_acabou_2
 	cmp	al, byte [array_posicoes_jogadas + 7]
 	jne	partida_nao_acabou_2
-	mov	word [x1], 165
+	mov	word [x1], 155
 	mov	word [y1], 305
-	mov	word [x2], 475
+	mov	word [x2], 485
 	mov	word [y2], 305
 	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
@@ -397,9 +397,9 @@ partida_nao_acabou_2:
 	jne	partida_nao_acabou_3
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_3
-	mov	word [x1], 165
+	mov	word [x1], 155
 	mov	word [y1], 195
-	mov	word [x2], 475
+	mov	word [x2], 485
 	mov	word [y2], 195
 	call	desenha_linha_de_vitoria 
 	jmp	partida_acabou
@@ -414,9 +414,9 @@ partida_nao_acabou_3:
 	cmp	al, byte [array_posicoes_jogadas + 2]
 	jne	partida_nao_acabou_4
 	mov	word [x1], 210
-	mov	word [y1], 150
+	mov	word [y1], 140
 	mov	word [x2], 210
-	mov	word [y2], 460
+	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
@@ -429,9 +429,9 @@ partida_nao_acabou_4:
 	cmp	al, byte [array_posicoes_jogadas + 5]
 	jne	partida_nao_acabou_5
 	mov	word [x1], 320
-	mov	word [y1], 150
+	mov	word [y1], 140
 	mov	word [x2], 320
-	mov	word [y2], 460
+	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
@@ -444,9 +444,9 @@ partida_nao_acabou_5:
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_6
 	mov	word [x1], 430
-	mov	word [y1], 150
+	mov	word [y1], 140
 	mov	word [x2], 430
-	mov	word [y2], 460
+	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
@@ -459,10 +459,10 @@ partida_nao_acabou_6:
 	jne	partida_nao_acabou_7
 	cmp	al, byte [array_posicoes_jogadas + 8]
 	jne	partida_nao_acabou_7
-	mov	word [x1], 210
-	mov	word [y1], 415
-	mov	word [x2], 440
-	mov	word [y2], 195
+	mov	word [x1], 155
+	mov	word [y1], 470
+	mov	word [x2], 485
+	mov	word [y2], 140
 	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 
@@ -474,10 +474,10 @@ partida_nao_acabou_7:
 	jne	partida_nao_acabou_8
 	cmp	al, byte [array_posicoes_jogadas + 6]
 	jne	partida_nao_acabou_8
-	mov	word [x1], 210
-	mov	word [y1], 195
-	mov	word [x2], 430
-	mov	word [y2], 415
+	mov	word [x1], 155
+	mov	word [y1], 140
+	mov	word [x2], 485
+	mov	word [y2], 470
 	call	desenha_linha_de_vitoria
 	jmp	partida_acabou
 

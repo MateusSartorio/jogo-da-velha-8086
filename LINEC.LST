@@ -367,9 +367,9 @@
    367 000002C9 7524                    	jne	partida_nao_acabou_1
    368 000002CB 3A06[5600]              	cmp	al, byte [array_posicoes_jogadas + 6]
    369 000002CF 751E                    	jne	partida_nao_acabou_1
-   370 000002D1 C706[4800]A500          	mov	word [x1], 165
+   370 000002D1 C706[4800]9B00          	mov	word [x1], 155
    371 000002D7 C706[4A00]9F01          	mov	word [y1], 415
-   372 000002DD C706[4C00]DB01          	mov	word [x2], 475
+   372 000002DD C706[4C00]E501          	mov	word [x2], 485
    373 000002E3 C706[4E00]9F01          	mov	word [y2], 415
    374 000002E9 E88301                  	call	desenha_linha_de_vitoria 
    375 000002EC E95901                  	jmp	partida_acabou
@@ -382,9 +382,9 @@
    382 000002FA 7524                    	jne	partida_nao_acabou_2
    383 000002FC 3A06[5700]              	cmp	al, byte [array_posicoes_jogadas + 7]
    384 00000300 751E                    	jne	partida_nao_acabou_2
-   385 00000302 C706[4800]A500          	mov	word [x1], 165
+   385 00000302 C706[4800]9B00          	mov	word [x1], 155
    386 00000308 C706[4A00]3101          	mov	word [y1], 305
-   387 0000030E C706[4C00]DB01          	mov	word [x2], 475
+   387 0000030E C706[4C00]E501          	mov	word [x2], 485
    388 00000314 C706[4E00]3101          	mov	word [y2], 305
    389 0000031A E85201                  	call	desenha_linha_de_vitoria 
    390 0000031D E92801                  	jmp	partida_acabou
@@ -397,9 +397,9 @@
    397 0000032B 7524                    	jne	partida_nao_acabou_3
    398 0000032D 3A06[5800]              	cmp	al, byte [array_posicoes_jogadas + 8]
    399 00000331 751E                    	jne	partida_nao_acabou_3
-   400 00000333 C706[4800]A500          	mov	word [x1], 165
+   400 00000333 C706[4800]9B00          	mov	word [x1], 155
    401 00000339 C706[4A00]C300          	mov	word [y1], 195
-   402 0000033F C706[4C00]DB01          	mov	word [x2], 475
+   402 0000033F C706[4C00]E501          	mov	word [x2], 485
    403 00000345 C706[4E00]C300          	mov	word [y2], 195
    404 0000034B E82101                  	call	desenha_linha_de_vitoria 
    405 0000034E E9F700                  	jmp	partida_acabou
@@ -414,9 +414,9 @@
    414 0000035E 3A06[5200]              	cmp	al, byte [array_posicoes_jogadas + 2]
    415 00000362 751E                    	jne	partida_nao_acabou_4
    416 00000364 C706[4800]D200          	mov	word [x1], 210
-   417 0000036A C706[4A00]9600          	mov	word [y1], 150
+   417 0000036A C706[4A00]8C00          	mov	word [y1], 140
    418 00000370 C706[4C00]D200          	mov	word [x2], 210
-   419 00000376 C706[4E00]CC01          	mov	word [y2], 460
+   419 00000376 C706[4E00]D601          	mov	word [y2], 470
    420 0000037C E8F000                  	call	desenha_linha_de_vitoria
    421 0000037F E9C600                  	jmp	partida_acabou
    422                                  
@@ -429,9 +429,9 @@
    429 0000038F 3A06[5500]              	cmp	al, byte [array_posicoes_jogadas + 5]
    430 00000393 751E                    	jne	partida_nao_acabou_5
    431 00000395 C706[4800]4001          	mov	word [x1], 320
-   432 0000039B C706[4A00]9600          	mov	word [y1], 150
+   432 0000039B C706[4A00]8C00          	mov	word [y1], 140
    433 000003A1 C706[4C00]4001          	mov	word [x2], 320
-   434 000003A7 C706[4E00]CC01          	mov	word [y2], 460
+   434 000003A7 C706[4E00]D601          	mov	word [y2], 470
    435 000003AD E8BF00                  	call	desenha_linha_de_vitoria
    436 000003B0 E99500                  	jmp	partida_acabou
    437                                  
@@ -444,9 +444,9 @@
    444 000003C0 3A06[5800]              	cmp	al, byte [array_posicoes_jogadas + 8]
    445 000003C4 751E                    	jne	partida_nao_acabou_6
    446 000003C6 C706[4800]AE01          	mov	word [x1], 430
-   447 000003CC C706[4A00]9600          	mov	word [y1], 150
+   447 000003CC C706[4A00]8C00          	mov	word [y1], 140
    448 000003D2 C706[4C00]AE01          	mov	word [x2], 430
-   449 000003D8 C706[4E00]CC01          	mov	word [y2], 460
+   449 000003D8 C706[4E00]D601          	mov	word [y2], 470
    450 000003DE E88E00                  	call	desenha_linha_de_vitoria
    451 000003E1 E96400                  	jmp	partida_acabou
    452                                  
@@ -459,10 +459,10 @@
    459 000003EF 7524                    	jne	partida_nao_acabou_7
    460 000003F1 3A06[5800]              	cmp	al, byte [array_posicoes_jogadas + 8]
    461 000003F5 751E                    	jne	partida_nao_acabou_7
-   462 000003F7 C706[4800]D200          	mov	word [x1], 210
-   463 000003FD C706[4A00]9F01          	mov	word [y1], 415
-   464 00000403 C706[4C00]B801          	mov	word [x2], 440
-   465 00000409 C706[4E00]C300          	mov	word [y2], 195
+   462 000003F7 C706[4800]9B00          	mov	word [x1], 155
+   463 000003FD C706[4A00]D601          	mov	word [y1], 470
+   464 00000403 C706[4C00]E501          	mov	word [x2], 485
+   465 00000409 C706[4E00]8C00          	mov	word [y2], 140
    466 0000040F E85D00                  	call	desenha_linha_de_vitoria
    467 00000412 E93300                  	jmp	partida_acabou
    468                                  
@@ -474,10 +474,10 @@
    474 00000420 7524                    	jne	partida_nao_acabou_8
    475 00000422 3A06[5600]              	cmp	al, byte [array_posicoes_jogadas + 6]
    476 00000426 751E                    	jne	partida_nao_acabou_8
-   477 00000428 C706[4800]D200          	mov	word [x1], 210
-   478 0000042E C706[4A00]C300          	mov	word [y1], 195
-   479 00000434 C706[4C00]AE01          	mov	word [x2], 430
-   480 0000043A C706[4E00]9F01          	mov	word [y2], 415
+   477 00000428 C706[4800]9B00          	mov	word [x1], 155
+   478 0000042E C706[4A00]8C00          	mov	word [y1], 140
+   479 00000434 C706[4C00]E501          	mov	word [x2], 485
+   480 0000043A C706[4E00]D601          	mov	word [y2], 470
    481 00000440 E82C00                  	call	desenha_linha_de_vitoria
    482 00000443 E90200                  	jmp	partida_acabou
    483                                  
