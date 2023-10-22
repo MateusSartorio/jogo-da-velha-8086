@@ -232,6 +232,7 @@ processa_novo_comando:
 	call 	imprime_comando_invalido
 	jmp 	le_novo_comando
 
+
 imprime_comando_invalido:
     	mov     cx, 16			;n�mero de caracteres
     	mov     bx, 0
@@ -249,6 +250,9 @@ loop_imprime_comando_invalido:
 
 	ret
 
+le_novo_comando_intermediario:
+	jmp le_novo_comando
+	
 ; novo_jogo:
 
 sair:
@@ -265,6 +269,9 @@ processa_jogada_C_intermediario:
 	jmp	processa_jogada_C
 
 processa_jogada_X:
+	cmp	byte [estado_partida], 0
+	jne	le_novo_comando_intermediario
+
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
 	mov	si, 0
@@ -277,7 +284,7 @@ processa_jogada_X:
 
 jogada_x_invalida:
 	call 	imprime_jogada_invalida
-	jmp 	le_novo_comando
+	jmp 	le_novo_comando_intermediario
 
 jogada_x_valida:
 	mov	byte [ultima_jogada], 1
@@ -292,9 +299,12 @@ jogada_x_valida:
 	call 	desenha_x
 	call	imprime_jogada
 	call	atualiza_estado_da_partida
-	jmp 	le_novo_comando
+	jmp 	le_novo_comando_intermediario
 
 processa_jogada_C:
+	cmp	byte [estado_partida], 0
+	jne	le_novo_comando_intermediario
+
 	call	calcula_posicao_i_j
 	call	calcula_indice_array_jogadas
 	mov	si, 0
@@ -307,7 +317,7 @@ processa_jogada_C:
 
 jogada_circulo_invalida:
 	call 	imprime_jogada_invalida
-	jmp 	le_novo_comando
+	jmp 	le_novo_comando_intermediario
 
 jogada_circulo_valida:
 	mov	byte [ultima_jogada], 2
@@ -322,7 +332,7 @@ jogada_circulo_valida:
 	call 	desenha_circulo
 	call	imprime_jogada
 	call	atualiza_estado_da_partida
-	jmp 	le_novo_comando
+	jmp 	le_novo_comando_intermediario
 
 imprime_jogada_invalida:
     	mov     cx, 16			;n�mero de caracteres
