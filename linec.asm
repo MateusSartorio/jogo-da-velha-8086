@@ -17,7 +17,7 @@ segment code
 ; salva modo atual de video (vendo como esta o modo de video da maquina)
 	mov  	ah, 0Fh
 	int  	10h
-	mov  	[modo_anterior], al   
+	mov  	byte [modo_anterior], al   
 
 ; altera modo de video para grafico 640x480 16 cores
 	mov     al, 12h
@@ -31,7 +31,7 @@ segment code
 desenha_ui:
 	push 	ax
 
-	; primeiro retangulo
+	; campo de mensagens
 	mov 	byte [cor], branco_intenso
 	mov 	ax, 10
 	push 	ax
@@ -73,8 +73,7 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-
-	; segundo retangulo
+	; campo de comando
 	mov 	ax, 10
 	push 	ax
 	mov 	ax, 75
@@ -116,7 +115,7 @@ desenha_ui:
 	call 	line
 
 	; jogo da velha
-	; horizontal
+	; linhas horizontais
 	mov 	ax, 155
 	push 	ax
 	mov 	ax, 250
@@ -137,7 +136,7 @@ desenha_ui:
 	push 	ax
 	call 	line
 
-	; vertical
+	; linhas verticais
 	mov 	ax, 265
 	push 	ax
 	mov 	ax, 140
@@ -168,7 +167,7 @@ le_novo_comando:
 	
 	mov	bx, 0
 loop_le_novo_comando:
-	mov 	ah, 1
+	mov 	ah, 7
 	int 	21h
 
 	cmp	al, 0Dh
@@ -237,7 +236,7 @@ limpa_campo_mensagens:
 
 loop_limpa_campo_mensagens:
 	call	cursor
-    	mov     al, [bx + string_vazia]
+    	mov     al, byte [bx + string_vazia]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
@@ -256,7 +255,7 @@ imprime_comando_invalido:
 
 loop_imprime_comando_invalido:
 	call	cursor
-    	mov     al, [bx + mensagem_comando_invalido]
+    	mov     al, byte [bx + mensagem_comando_invalido]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
@@ -340,16 +339,14 @@ loop_interior:
 	pop	ax
 	ret
 
-
 sair:
 	mov    	ah, 08h
 	int     21h
 	mov  	ah, 0   					; set video mode
 	mov  	al, [modo_anterior]   				; modo anterior
 	int  	10h
-	mov     ax, 4c00h
+	mov     ah, 4ch
 	int     21h
-
 
 processa_jogada_x:
 	cmp	byte [estado_partida], 0
@@ -420,7 +417,7 @@ imprime_jogada_invalida:
 
 loop_imprime_jogada_invalida:
 	call	cursor
-    	mov     al, [bx + mensagem_jogada_invalida]
+    	mov     al, byte [bx + mensagem_jogada_invalida]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
@@ -449,7 +446,7 @@ coloca_na_cor_do_circulo:
 
 loop_imprime_jogada:
 	call	cursor
-    	mov     al, [bx + novo_comando]
+    	mov     al, byte [bx + novo_comando]
 	call	caracter
     	inc     bx			;proximo caracter
 	inc	dl			;avanca a coluna
@@ -1422,7 +1419,6 @@ fim_line:
 
 ;*******************************************************************
 segment data
-
 
 ;	I R G B COR
 ;	0 0 0 0 preto
