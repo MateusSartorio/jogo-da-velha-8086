@@ -1,9 +1,11 @@
+; versao de 10/05/2007
+; corrigido erro de arredondamento na rotina line
+; circle e full_circle disponibilizados por Jefferson Moro em 10/2009
+
 extern cor, preto, azul, verde, cyan, vermelho, magenta, marrom, branco, cinza, azul_claro, verde_claro, cyan_claro, rosa, magenta_claro, amarelo, branco_intenso
 extern modo_anterior, linha, coluna, deltax, deltay, mens
 extern mensagem_comando_invalido, mensagem_jogada_invalida, mensgem_partida_acabou,mensagem_circulo_venceu, mensagem_empate, mensagem_x_venceu, string_vazia
 extern novo_comando, x1, x2, y1, y2, array_posicoes_jogadas, i, j, p, ultima_jogada, estado_partida
-
-
 
 global line, cursor, caracter, circle
 

@@ -2,17 +2,12 @@
 ; Mateus Ticianeli Sartorio
 ; Sistemas Embarcados I - 2023/2 - Engenharia de Computacao
 
-; versao de 10/05/2007
-; corrigido erro de arredondamento na rotina line.
-; circle e full_circle disponibilizados por Jefferson Moro em 10/2009
-
 extern line, cursor, caracter, circle
 
 global cor, preto, azul, verde, cyan, vermelho, magenta, marrom, branco, cinza, azul_claro, verde_claro, cyan_claro, rosa, magenta_claro, amarelo, branco_intenso
 global modo_anterior, linha, coluna, deltax, deltay, mens
 global mensagem_comando_invalido, mensagem_jogada_invalida, mensgem_partida_acabou,mensagem_circulo_venceu, mensagem_empate, mensagem_x_venceu, string_vazia
 global novo_comando, x1, x2,  y1, y2, array_posicoes_jogadas, i, j, p, ultima_jogada, estado_partida
-
 
 segment code
 ..start:
@@ -28,12 +23,12 @@ segment code
 	mov  	byte [modo_anterior], al   
 
 ; altera modo de video para grafico 640x480 16 cores
-	mov     al, 12h
-	mov     ah, 0
-	int     10h
+	mov   al, 12h
+	mov   ah, 0
+	int   10h
 
 	call	desenha_ui
-	jmp	le_novo_comando
+	jmp		le_novo_comando
 
 ; A partir daqui codigo desenvolvido pela gente
 desenha_ui:
@@ -170,17 +165,17 @@ desenha_ui:
 
 le_novo_comando:
 
-	mov	byte [novo_comando], 0
-	mov	byte [novo_comando + 1], 0
-	mov	byte [novo_comando + 2], 0
+	mov		byte [novo_comando], 0
+	mov		byte [novo_comando + 1], 0
+	mov		byte [novo_comando + 2], 0
 	
-	mov	bx, 0
+	mov		bx, 0
 loop_le_novo_comando:
 	mov 	ah, 1
 	int 	21h
 
-	cmp	al, 0Dh
-	je	leu_line_feed
+	cmp		al, 0Dh
+	je		leu_line_feed
 	
 	cmp	al, 08h
 	je	leu_backspace
@@ -209,8 +204,14 @@ nao_leu_backspace:
 
 leu_line_feed:
 	cmp	bx, 0
-	je	loop_le_novo_comando
+	je	line_feed_com_novo_comando_vazio
+	jmp	line_feed_com_novo_comando_nao_vazio
 
+line_feed_com_novo_comando_vazio:
+	call	volta_cursor_para_0x0
+	jmp	loop_le_novo_comando
+
+line_feed_com_novo_comando_nao_vazio:
 	cmp	bx, 3
 	jg	apertou_enter_com_comando_muito_grande
 
