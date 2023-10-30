@@ -48,4 +48,4 @@ This program is released under license GNU GPL v3+ license.
 
 ## Suporte:
 
-Por favor reporte qualquer problema com o jogo da velha em https://github.com/MateusSartorio/trabalho-asm.
+Por favor reporte qualquer problema com o jogo da velha em [https://github.com/MateusSartorio/trabalho-asm](https://github.com/MateusSartorio/jogo-da-velha-8086.git).
