@@ -1,16 +1,42 @@
 # Jogo da Velha 8086
+
 Jogo da velha feito em ASM 8086.
 
+![Interface gráfica do jogo](./assets/image.png)
+
 # Setup
-Clone este repositório localmente
-Monte o diretório do repositório no DOSBox...
-Completar isso daqui depois
 
-## Ainda a ser feito
-1. Generalizar as funcoes de impressao de texto, que estão muito repetitivas sem necessidade
-2. Modularizar o código
-3. Comentar código
-4. Popular o README.md com instruções de instalação e uso
+Clone este repositório localmente:
+```git clone https://github.com/MateusSartorio/trabalho-asm.git```
 
-## Detalhes que se der tempo talvez vale a pena dar uma olhada
-2. Descobrir como se corrigir o artefato que da ao se sair do programa
+Monte um driver do DOSBox no diretório do repositório:
+```MOUNT C <diretório do repositório>```
+```C:```
+
+Rode o script ```make``` para montar o código e ```main``` para executar o programa:
+```make```
+```main```
+
+
+## Licença:
+
+Copyright Universidade Federal do Espirito Santo (Ufes)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+This program is released under license GNU GPL v3+ license.
+
+## Support:
+
+Por favor reporte qualquer problema com o jogo da velha em https://github.com/MateusSartorio/trabalho-asm.
