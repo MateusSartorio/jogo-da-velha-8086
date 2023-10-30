@@ -19,7 +19,7 @@ MOUNT C <diretório do repositório>
 C:
 ```
 
-* Rode o script ```make``` para montar o código e ```main``` para executar o programa:
+* Rode o script ```make``` para montar o executável a partir do código e ```main``` para executar o programa:
 
 ```bash
 make
