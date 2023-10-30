@@ -15,7 +15,7 @@ git clone https://github.com/MateusSartorio/trabalho-asm.git
 * Monte um driver do DOSBox no diretório do repositório:
 
 ```
-MOUNT C <'diretório do repositório'>
+MOUNT C <diretório do repositório>
 C:
 ```
 
