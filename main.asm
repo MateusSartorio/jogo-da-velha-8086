@@ -164,7 +164,7 @@ desenha_ui:
 	ret
 
 le_novo_comando:
-
+	call 	limpa_campo_comando_sendo_digitado
 	mov		byte [novo_comando], 0
 	mov		byte [novo_comando + 1], 0
 	mov		byte [novo_comando + 2], 0
@@ -208,8 +208,7 @@ leu_line_feed:
 	jmp	line_feed_com_novo_comando_nao_vazio
 
 line_feed_com_novo_comando_vazio:
-	call	volta_cursor_para_0x0
-	jmp	loop_le_novo_comando
+	jmp		le_novo_comando
 
 line_feed_com_novo_comando_nao_vazio:
 	cmp	bx, 3
@@ -227,7 +226,7 @@ excedeu_tamanho_comando:
 
 processa_novo_comando:
 	cmp 	byte [novo_comando], 'c'
-	je 	novo_jogo
+	je 	novo_jogo_intermediario
 	cmp 	byte [novo_comando], 's'
 	je 	sair_intermediario
 	cmp 	byte [novo_comando], 'X'
@@ -236,6 +235,24 @@ processa_novo_comando:
 	je 	processa_jogada_circulo_intermediario
 	call 	imprime_comando_invalido
 	jmp 	le_novo_comando
+
+limpa_campo_comando_sendo_digitado:
+    	mov     cx, 10			;n�mero de caracteres
+    	mov     bx, 0
+    	mov     dh, 0			;linha 0-29
+    	mov     dl, 0			;coluna 0-79
+	    mov	    byte [cor], preto
+
+loop_limpa_campo_comando_sendo_digitado:
+	call	cursor
+    mov     al, byte [bx + string_vazia]
+	call	caracter
+    	inc     bx			;proximo caracter
+	inc	dl			;avanca a coluna
+    	loop    loop_limpa_campo_comando_sendo_digitado
+
+	call volta_cursor_para_0x0
+	ret
 
 limpa_campo_mensagens:
     	mov     cx, 41			;n�mero de caracteres
@@ -254,6 +271,12 @@ loop_limpa_campo_mensagens:
 
 	ret
 
+novo_jogo_intermediario:
+	jmp	novo_jogo
+
+sair_intermediario:
+	jmp	sair
+	
 imprime_comando_invalido:
 	call	limpa_campo_mensagens
 
@@ -274,11 +297,10 @@ loop_imprime_comando_invalido:
 	call	volta_cursor_para_0x0
 	ret
 
+
 processa_jogada_x_intermediario:
 	jmp	processa_jogada_x
 
-sair_intermediario:
-	jmp	sair
 
 le_novo_comando_intermediario:
 	jmp 	le_novo_comando
