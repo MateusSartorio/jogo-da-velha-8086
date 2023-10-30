@@ -12,7 +12,7 @@ Jogo da velha feito em ASM 8086.
 git clone https://github.com/MateusSartorio/trabalho-asm.git
 ```
 
-* Monte um driver do DOSBox no diretório do repositório:
+* No terminal do DOSBox, monte um driver no diretório do repositório:
 
 ```
 MOUNT C <diretório do repositório>
