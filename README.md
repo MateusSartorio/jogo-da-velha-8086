@@ -14,8 +14,8 @@ git clone https://github.com/MateusSartorio/trabalho-asm.git
 
 * Monte um driver do DOSBox no diretório do repositório:
 
-```bash
-MOUNT C <diretório do repositório>
+```
+MOUNT C <'diretório do repositório'>
 C:
 ```
 
@@ -46,6 +46,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 This program is released under license GNU GPL v3+ license.
 
-## Support:
+## Suporte:
 
 Por favor reporte qualquer problema com o jogo da velha em https://github.com/MateusSartorio/trabalho-asm.
