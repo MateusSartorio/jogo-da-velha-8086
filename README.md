@@ -6,16 +6,19 @@ Jogo da velha feito em ASM 8086.
 
 # Setup
 
-Clone este repositório localmente:
+* Clone este repositório localmente:
+
 ```git clone https://github.com/MateusSartorio/trabalho-asm.git```
 
-Monte um driver do DOSBox no diretório do repositório:
-```MOUNT C <diretório do repositório>```
-```C:```
+* Monte um driver do DOSBox no diretório do repositório:
 
-Rode o script ```make``` para montar o código e ```main``` para executar o programa:
-```make```
-```main```
+```MOUNT C <diretório do repositório>
+C:```
+
+* Rode o script ```make``` para montar o código e ```main``` para executar o programa:
+
+```make
+main```
 
 
 ## Licença:
